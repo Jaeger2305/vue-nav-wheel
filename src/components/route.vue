@@ -1,0 +1,118 @@
+<template>
+  <g @click="$event => $emit('clicked', $event)">
+    <g>
+      <path fill="blue" :stroke="route.meta.navWheel.style.stroke" :d="routeArc" />
+      <text
+        :x="labelCentroid[0]"
+        :y="labelCentroid[1]"
+        class="route-label"
+        @click.stop="routeClicked(route.path)"
+      >{{ route.name }}</text>
+      <route
+        v-for="(child, index) in route.children"
+        :key="child.path"
+        :route="child"
+        :start-radius="outerRadius + config.constants.spaceBetweenParentChild"
+        :size="size"
+        :start-angle="
+          segmentRadians / route.children.length * index + startAngle
+        "
+        :end-angle="
+          segmentRadians / route.children.length * (index + 1) +
+            startAngle
+        "
+        :pad-angle="config.constants.padAngle / route.children.length * segmentRadians"
+        :config="config"
+      />
+    </g>
+  </g>
+</template>
+<style>
+.route-label {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  fill: white;
+  text-anchor: middle;
+}
+</style>
+
+<script>
+import { arc } from "d3-shape";
+
+export default {
+  components: {
+    Route: () => import("./route.vue")
+  },
+  props: {
+    route: {
+      type: Object,
+      required: true
+    },
+    startAngle: {
+      type: Number,
+      required: true
+    },
+    endAngle: {
+      type: Number,
+      required: true
+    },
+    size: {
+      type: Number,
+      default: 1
+    },
+    startRadius: {
+      type: Number,
+      default: 50
+    },
+    padAngle: {
+      type: Number,
+      required: true
+    },
+    config: {
+      type: Object,
+      required: true
+    }
+  },
+  data() {
+    return {
+      arcGenerator: arc()
+    };
+  },
+  computed: {
+    routeArc() {
+      return this.arcGenerator.cornerRadius(
+        this.size / this.config.constants.cornerSharpness
+      )(this.arcOptions);
+    },
+    labelCentroid() {
+      return this.arcGenerator.centroid(this.arcOptions);
+    },
+    innerRadius() {
+      return this.startRadius;
+    },
+    outerRadius() {
+      return (
+        this.size / this.config.constants.shrinkRouteScale + this.startRadius
+      );
+    },
+    segmentRadians() {
+      return this.endAngle - this.startAngle;
+    },
+    arcOptions() {
+      return {
+        innerRadius: this.innerRadius,
+        outerRadius: this.outerRadius,
+        startAngle: this.startAngle,
+        endAngle: this.endAngle,
+        padAngle: this.padAngle
+      };
+    }
+  },
+  methods: {
+    routeClicked(path) {
+      this.$router.push({ path });
+    }
+  }
+};
+</script>
