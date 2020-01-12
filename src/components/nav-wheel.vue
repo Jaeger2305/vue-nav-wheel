@@ -129,7 +129,13 @@ export default {
   },
   mounted() {
     // Reposition the slot to be inline with the radial wheel.
-    this.centerSlotBox = this.$slots.center[0].elm.getBBox();
+    if (this.$slots.center) {
+      if (this.$slots.center.length > 1)
+        throw new Error(
+          "Expecting only one element, please wrap in a <g> tag."
+        );
+      this.centerSlotBox = this.$slots.center[0].elm.getBBox();
+    }
   },
   watch: {
     $route() {
