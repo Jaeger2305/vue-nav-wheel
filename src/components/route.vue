@@ -15,6 +15,7 @@
       >{{ route.name }}</text>
       <route
         v-for="(child, index) in route.children"
+        v-show="showChildren"
         :key="child.path"
         :route="child"
         :start-radius="outerRadius + config.constants.spaceBetweenParentChild"
@@ -93,7 +94,8 @@ export default {
   },
   data() {
     return {
-      arcGenerator: arc()
+      arcGenerator: arc(),
+      showChildren: false
     };
   },
   computed: {
@@ -129,6 +131,10 @@ export default {
   methods: {
     routeClicked(path) {
       this.$router.push({ path });
+    },
+    selectRoute($event) {
+      this.showChildren = !this.showChildren;
+      this.$emit("clicked", $event);
     }
   }
 };
