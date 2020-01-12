@@ -1,9 +1,16 @@
 <template>
   <div id="vue-nav-wheel">
-    <nav-wheel :config="navWheelConfig" @route-change="addVisualLog('change route')" />
+    <input v-model.number="size" type="range" min="200" max="800" />
+    <span>{{ size }}</span>
+    <nav-wheel
+      :size="size"
+      :config="navWheelConfig"
+      @route-change="addVisualLog({key: Date.now(), entry: 'change route'})"
+    >
+    </nav-wheel>
     <router-view></router-view>
     <ul>
-      <li v-for="log in logs" :key="log">{{ log }}</li>
+      <li v-for="{entry, key} in logs" :key="key">{{ entry }}</li>
     </ul>
   </div>
 </template>
@@ -21,6 +28,7 @@ export default {
   data() {
     return {
       logs: [],
+      size: 600,
       navWheelConfig: {
         routes,
         ...navWheelConfig

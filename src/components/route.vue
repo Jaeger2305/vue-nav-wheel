@@ -1,7 +1,12 @@
 <template>
   <g @click="$event => $emit('clicked', $event)">
     <g>
-      <path fill="blue" :stroke="route.meta.navWheel.style.stroke" :d="routeArc" />
+      <path
+        class="route-annular"
+        fill="blue"
+        :stroke="route.meta.navWheel.style.stroke"
+        :d="routeArc"
+      />
       <text
         :x="labelCentroid[0]"
         :y="labelCentroid[1]"
@@ -28,12 +33,24 @@
   </g>
 </template>
 <style>
+.route-annular {
+  fill: darkblue;
+  stroke: red;
+}
+.route-annular:hover {
+  fill: navy;
+  stroke: red;
+}
 .route-label {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 12px;
   font-weight: bold;
   fill: white;
   text-anchor: middle;
+  cursor: pointer;
+}
+.route-label:hover {
+  fill: purple;
 }
 </style>
 

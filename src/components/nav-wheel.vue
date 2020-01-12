@@ -1,9 +1,8 @@
 <template>
   <div>
-    <input v-model.number="size" type="range" min="200" max="800" />
     <input v-model.number="scale" type="range" min="0.5" max="1.5" step="0.1" />
-    <span>{{ size }}</span>
     <svg :width="size" :height="size" style="border: solid" @mousemove="log">
+    <span>{{ scale }}</span>
       <g
         :transform="
           `translate(${panTranslation[0]}, ${panTranslation[1]}),
@@ -38,16 +37,19 @@ export default {
     config: {
       type: Object,
       required: true
+    },
+    size: {
+      type: Number,
+      required: true
     }
   },
   data() {
     return {
-      size: 600,
       scale: this.config.constants.scale,
       mouse: [
-        600 / this.config.constants.scale / 2,
-        600 / this.config.constants.scale / 2
-      ]
+        this.size / this.config.constants.scale / 2,
+        this.size / this.config.constants.scale / 2
+      ],
     };
   },
   computed: {
