@@ -22,13 +22,18 @@
         :start-radius="outerRadius + config.constants.spaceBetweenParentChild"
         :size="size"
         :start-angle="
-          segmentRadians / route.children.length * index + startAngle
+          (segmentRadians / route.children.length) * index +
+            startAngle -
+            config.constants.childAngleSpread * route.children.length
         "
         :end-angle="
-          segmentRadians / route.children.length * (index + 1) +
-            startAngle
+          (segmentRadians / route.children.length) * (index + 1) +
+            startAngle -
+            config.constants.childAngleSpread * route.children.length
         "
-        :pad-angle="config.constants.padAngle / route.children.length * segmentRadians"
+        :pad-angle="
+          (config.constants.padAngle / route.children.length) * segmentRadians
+        "
         :config="config"
       />
     </g>
@@ -82,7 +87,7 @@ export default {
     },
     startRadius: {
       type: Number,
-      default: 50
+      required: true
     },
     padAngle: {
       type: Number,
@@ -117,7 +122,11 @@ export default {
       );
     },
     segmentRadians() {
-      return this.endAngle - this.startAngle;
+      return (
+        this.endAngle -
+        this.startAngle +
+        this.config.constants.childAngleSpread * 2 * this.route.children.length
+      );
     },
     arcOptions() {
       return {

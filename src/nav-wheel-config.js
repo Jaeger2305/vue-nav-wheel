@@ -4,6 +4,8 @@ export default {
     spaceBetweenParentChild: 10,
     shrinkRouteScale: 5,
     scale: 1,
-    cornerSharpness: 100
+    cornerSharpness: 100,
+    startRadius: 100,
+    childAngleSpread: 0.04
   }
 };

@@ -14,18 +14,21 @@
           scale(${scale}, ${scale})`
         "
       >
-        <route
-          v-for="(route, index) in config.routes"
-          :key="route.path"
-          :route="route"
-          :start-angle="((2 * Math.PI) / config.routes.length) * index"
-          :end-angle="((2 * Math.PI) / config.routes.length) * (index + 1)"
-          :pad-angle="config.constants.padAngle / config.routes.length * (2 * Math.PI)"
-          :config="config"
-          :size="size"
-          :transform="`translate(${size / scale / 2}, ${size / scale / 2})`"
-          @clicked="log"
-        />
+        <g :transform="`translate(${size / scale / 2}, ${size / scale / 2})`">
+          <route
+            v-for="(route, index) in config.routes"
+            :key="route.path"
+            :route="route"
+            :start-angle="((2 * Math.PI) / config.routes.length) * index"
+            :end-angle="((2 * Math.PI) / config.routes.length) * (index + 1)"
+            :pad-angle="
+              (config.constants.padAngle / config.routes.length) * (2 * Math.PI)
+            "
+            :start-radius="config.constants.startRadius"
+            :config="config"
+            :size="size"
+            @clicked="log"
+          />
           <g
             :transform="
               `translate(${centerTranslation[0]}, ${centerTranslation[1]}), scale(${centerScale}, ${centerScale})`
@@ -33,6 +36,7 @@
           >
             <slot name="center" />
           </g>
+        </g>
       </g>
     </svg>
   </div>
@@ -63,6 +67,7 @@ export default {
         this.size / this.config.constants.scale / 2
       ],
       centerSlotBox: { width: 100, height: 100 },
+      initialSize: this.size
     };
   },
   computed: {
@@ -94,7 +99,12 @@ export default {
     log($event) {
       // eslint-disable-next-line no-console
       console.log($event);
+    },
+    panSvg($event) {
       this.mouse = [Math.abs($event.offsetX), Math.abs($event.offsetY)];
+    },
+    scaleSvg($event) {
+      this.scale -= $event.deltaY / 1000;
     }
   },
   mounted() {
