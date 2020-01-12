@@ -2,64 +2,53 @@
   <g @click.stop="selectRoute">
     <g>
       <path
-        class="route-annular"
-        fill="blue"
-        :stroke="route.meta.navWheel.style.stroke"
+        class="nav-wheel__route-annular"
+        :style="route.meta.navWheel.style"
         :d="routeArc"
+        filter="url(#dropshadow)"
       />
       <text
         :x="labelCentroid[0]"
         :y="labelCentroid[1]"
-        class="route-label"
+        class="nav-wheel__route-label"
         @click.stop="goToRoute(route.path)"
         >{{ route.name }}</text
       >
-      <route
-        v-for="(child, index) in route.children"
-        v-show="showChildren"
-        :key="child.path"
-        :route="child"
-        :start-radius="outerRadius + config.constants.spaceBetweenParentChild"
-        :size="size"
-        :start-angle="
-          (segmentRadians / route.children.length) * index +
-            startAngle -
-            config.constants.childAngleSpread * route.children.length
+      <transition-group
+        :name="
+          route.meta.navWheel.transitionName ||
+            config.constants.defaultTransition
         "
-        :end-angle="
-          (segmentRadians / route.children.length) * (index + 1) +
-            startAngle -
-            config.constants.childAngleSpread * route.children.length
-        "
-        :pad-angle="
-          (config.constants.padAngle / route.children.length) * segmentRadians
-        "
-        :config="config"
-      />
+        tag="g"
+      >
+        <route
+          v-for="(child, index) in route.children"
+          v-show="showChildren"
+          :class="`nav-wheel__route-level-${level + 1}`"
+          :key="child.path"
+          :route="child"
+          :start-radius="outerRadius + config.constants.spaceBetweenParentChild"
+          :size="size"
+          :start-angle="
+            (segmentRadians / route.children.length) * index +
+              startAngle -
+              config.constants.childAngleSpread * route.children.length
+          "
+          :end-angle="
+            (segmentRadians / route.children.length) * (index + 1) +
+              startAngle -
+              config.constants.childAngleSpread * route.children.length
+          "
+          :pad-angle="
+            (config.constants.padAngle / route.children.length) * segmentRadians
+          "
+          :config="config"
+        />
+      </transition-group>
     </g>
   </g>
 </template>
-<style>
-.route-annular {
-  fill: darkblue;
-  stroke: red;
-}
-.route-annular:hover {
-  fill: navy;
-  stroke: red;
-}
-.route-label {
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 12px;
-  font-weight: bold;
-  fill: white;
-  text-anchor: middle;
-  cursor: pointer;
-}
-.route-label:hover {
-  fill: purple;
-}
-</style>
+<style></style>
 
 <script>
 import { arc } from "d3-shape";
@@ -96,6 +85,10 @@ export default {
     config: {
       type: Object,
       required: true
+    },
+    level: {
+      type: Number,
+      default: 0
     }
   },
   data() {
