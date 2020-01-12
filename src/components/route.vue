@@ -3,7 +3,7 @@
     <g>
       <path
         class="nav-wheel__route-annular"
-        :style="route.meta.navWheel.style"
+        :style="navWheelMeta.style"
         :d="routeArc"
         filter="url(#dropshadow)"
       />
@@ -16,8 +16,7 @@
       >
       <transition-group
         :name="
-          route.meta.navWheel.transitionName ||
-            config.constants.defaultTransition
+          navWheelMeta.transitionName || config.constants.defaultTransition
         "
         tag="g"
       >
@@ -129,6 +128,9 @@ export default {
         endAngle: this.endAngle,
         padAngle: this.padAngle
       };
+    },
+    navWheelMeta() {
+      return (this.route.meta || {}).navWheel || {};
     }
   },
   methods: {

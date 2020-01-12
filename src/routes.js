@@ -4,8 +4,7 @@ export default [
     path: "/test1",
     component: {
       template: '<div>test1<font-awesome-icon icon="coffee" /></div>'
-    },
-    meta: { navWheel: { style: { stroke: "blue" } } }
+    }
   },
   {
     name: "test-name-2",
@@ -73,40 +72,35 @@ export default [
         path: "/test3/child2",
         component: {
           template: '<div><font-awesome-icon icon="child" />child-2</div>'
-        },
-        meta: { navWheel: { style: { stroke: "yellow" } } }
+        }
       },
       {
         name: "test-name-3-child-3",
         path: "/test3/child3",
         component: {
           template: '<div><font-awesome-icon icon="child" />child-3</div>'
-        },
-        meta: { navWheel: { style: { stroke: "yellow" } } }
+        }
       },
       {
         name: "test-name-3-child-4",
         path: "/test3/child4",
         component: {
           template: '<div><font-awesome-icon icon="child" />child-4</div>'
-        },
-        meta: { navWheel: { style: { stroke: "yellow" } } }
+        }
       },
       {
         name: "test-name-3-child-5",
         path: "/test3/child5",
         component: {
           template: '<div><font-awesome-icon icon="child" />child-5</div>'
-        },
-        meta: { navWheel: { style: { stroke: "yellow" } } }
+        }
       },
       {
         name: "test-name-3-child-6",
         path: "/test3/child6",
         component: {
           template: '<div><font-awesome-icon icon="child" />child-6</div>'
-        },
-        meta: { navWheel: { style: { stroke: "yellow" } } }
+        }
       }
     ]
   },
@@ -115,7 +109,6 @@ export default [
     path: "/test4",
     component: {
       template: '<div><font-awesome-icon icon="circle" />test4</div>'
-    },
-    meta: { navWheel: { style: { stroke: "purple" } } }
+    }
   }
 ];

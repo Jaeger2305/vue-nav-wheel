@@ -1,21 +1,24 @@
 .nav-wheel__route-annular {
-  fill: darkblue;
-  stroke: red;
+  fill: #41b883;
+  stroke: #34495e;
+  stroke-width: 0.7%;
 }
 .nav-wheel__route-annular:hover {
-  fill: navy;
-  stroke: red;
+  transition-duration: 0.4s;
+  fill: #34495e;
+  stroke: #41b883;
 }
 .nav-wheel__route-label {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 14px;
-  font-weight: bold;
-  fill: white;
+  font-size: 22px;
+  fill: black;
   text-anchor: middle;
   cursor: pointer;
 }
 .nav-wheel__route-label:hover {
   fill: purple;
+  transition-duration: 0.2s;
+  font-size: 28px;
 }
 
 .fade-enter-active,

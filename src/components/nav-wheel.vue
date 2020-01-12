@@ -55,6 +55,10 @@
   </div>
 </template>
 
+<style>
+@import "./nav-wheel.css";
+</style>
+
 <script>
 import Route from "./route";
 
@@ -120,10 +124,7 @@ export default {
       this.scale -= $event.deltaY / 1000;
     },
     resetPan() {
-      this.mouse = [
-        this.size / this.config.constants.scale / 2,
-        this.size / this.config.constants.scale / 2
-      ];
+      this.mouse = [this.size / 2, this.size / 2];
     }
   },
   mounted() {

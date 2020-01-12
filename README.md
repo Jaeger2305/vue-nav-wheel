@@ -32,21 +32,14 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 Todo:
 
-# 1. tidyup the parameters (get rid of the rects)
-
-# 2. Fix the properties/sizes
-
-# 3. Calculate the annulars for nested children
-
-4. Add events to the annulars (click, hover, new)
-
-# 5. Responsive to sized element
-
 6. host on npm and test for another project
 7. Add CSS styles
 8. Add full customisation of the styles
-9. Add various presets
-10. mobile responsive
+   fill, icons, stokes, text font, filters, the config file
+9. Add feature customisations
+   appear on hover after time, appear on click, transparent filter. On click brings in focus
+10. Add various presets
+11. mobile responsive
 
 Broad goals:
 
