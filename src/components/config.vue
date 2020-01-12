@@ -4,7 +4,7 @@
       v-model.number="inputPadAngle"
       type="range"
       min="0"
-      max="1"
+      max="0.5"
       step="0.01"
     />
     <input
@@ -17,7 +17,7 @@
     <input
       v-model.number="inputShrinkRouteScale"
       type="range"
-      min="0"
+      min="1"
       max="10"
       step="1"
     />
@@ -46,13 +46,17 @@
       v-model.number="inputChildAngleSpread"
       type="range"
       min="0"
-      max="1"
+      max="0.5"
       step="0.01"
     />
+    <button @click="randomize">Randomize</button>
   </div>
 </template>
 
 <script>
+function randomInRange(min, max) {
+  return Math.random() * (max - min) + min;
+}
 export default {
   props: {
     padAngle: {
@@ -140,6 +144,17 @@ export default {
       set(childAngleSpread) {
         this.$emit("update:childAngleSpread", childAngleSpread);
       }
+    }
+  },
+  methods: {
+    randomize() {
+      this.inputPadAngle = randomInRange(0, 0.5);
+      this.inputSpaceBetweenParentChild = randomInRange(0, 100);
+      this.inputShrinkRouteScale = randomInRange(1, 10);
+      this.inputScale = randomInRange(0, 2);
+      this.inputCornerSharpness = randomInRange(0, 300);
+      this.inputStartRadius = randomInRange(0, 300);
+      this.inputChildAngleSpread = randomInRange(0, 0.5);
     }
   }
 };
