@@ -6,6 +6,7 @@
       :width="size"
       :height="size"
       @mousemove="panSvg"
+      @mouseleave="resetPan"
       @mousewheel.prevent="scaleSvg"
     >
       <g
@@ -105,6 +106,12 @@ export default {
     },
     scaleSvg($event) {
       this.scale -= $event.deltaY / 1000;
+    },
+    resetPan() {
+      this.mouse = [
+        this.size / this.config.constants.scale / 2,
+        this.size / this.config.constants.scale / 2
+      ];
     }
   },
   mounted() {
