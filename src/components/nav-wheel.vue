@@ -10,6 +10,16 @@
       @mouseleave="resetPan"
       @mousewheel.prevent="scaleSvg"
     >
+      <defs xmlns="http://www.w3.org/2000/svg">
+        <filter id="dropshadow" height="130%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+          <feOffset dx="2" dy="2" result="offsetblur" />
+          <feMerge>
+            <feMergeNode in="offsetblur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
       <g
         :transform="
           `translate(${panTranslation[0]}, ${panTranslation[1]}),
