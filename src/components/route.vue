@@ -1,5 +1,5 @@
 <template>
-  <g @click="$event => $emit('clicked', $event)">
+  <g @click.stop="selectRoute">
     <g>
       <path
         class="route-annular"
@@ -11,8 +11,9 @@
         :x="labelCentroid[0]"
         :y="labelCentroid[1]"
         class="route-label"
-        @click.stop="routeClicked(route.path)"
-      >{{ route.name }}</text>
+        @click.stop="goToRoute(route.path)"
+        >{{ route.name }}</text
+      >
       <route
         v-for="(child, index) in route.children"
         v-show="showChildren"
@@ -129,7 +130,7 @@ export default {
     }
   },
   methods: {
-    routeClicked(path) {
+    goToRoute(path) {
       this.$router.push({ path });
     },
     selectRoute($event) {
