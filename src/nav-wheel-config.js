@@ -6,6 +6,7 @@ export default {
     scale: 1,
     cornerSharpness: 100,
     startRadius: 100,
-    childAngleSpread: 0.04
+    childAngleSpread: 0.04,
+    defaultTransition: "fade"
   }
 };

@@ -3,6 +3,7 @@
     <input v-model.number="scale" type="range" min="0.5" max="1.5" step="0.1" />
     <span>{{ scale }}</span>
     <svg
+      class="nav-wheel__svg"
       :width="size"
       :height="size"
       @mousemove="panSvg"
@@ -18,6 +19,7 @@
         <g :transform="`translate(${size / scale / 2}, ${size / scale / 2})`">
           <route
             v-for="(route, index) in config.routes"
+            class="nav-wheel__routes-0"
             :key="route.path"
             :route="route"
             :start-angle="((2 * Math.PI) / config.routes.length) * index"

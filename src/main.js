@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import routes from "./routes";
+import("./nav-wheel.css");
 
 library.add(faCoffee, faChild, faCircle, faArchive, faAddressCard);
 Vue.component("font-awesome-icon", FontAwesomeIcon);

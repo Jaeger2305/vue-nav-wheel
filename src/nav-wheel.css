@@ -1,0 +1,28 @@
+.nav-wheel__route-annular {
+  fill: darkblue;
+  stroke: red;
+}
+.nav-wheel__route-annular:hover {
+  fill: navy;
+  stroke: red;
+}
+.nav-wheel__route-label {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  fill: white;
+  text-anchor: middle;
+  cursor: pointer;
+}
+.nav-wheel__route-label:hover {
+  fill: purple;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+  opacity: 1;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}

@@ -17,7 +17,7 @@
     <nav-wheel
       :size="size"
       :config="navWheelConfig"
-      @route-change="addVisualLog({key: Date.now(), entry: 'change route'})"
+      @route-change="addVisualLog({ key: Date.now(), entry: 'change route' })"
     >
       <template slot="center">
         <font-awesome-icon icon="address-card" :style="{ color: 'grey' }" />
@@ -25,7 +25,7 @@
     </nav-wheel>
     <router-view></router-view>
     <ul>
-      <li v-for="{entry, key} in logs" :key="key">{{ entry }}</li>
+      <li v-for="{ entry, key } in logs" :key="key">{{ entry }}</li>
     </ul>
   </div>
 </template>

@@ -22,7 +22,12 @@ export default [
       template:
         '<div>test3<font-awesome-icon icon="coffee" /><router-view /></div>'
     },
-    meta: { navWheel: { style: { stroke: "yellow" } } },
+    meta: {
+      navWheel: {
+        transitionName: "fade",
+        style: { stroke: "yellow", fill: "purple" }
+      }
+    },
     children: [
       {
         name: "test-name-3-child-1",
