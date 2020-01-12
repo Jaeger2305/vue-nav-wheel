@@ -7,6 +7,9 @@
       :config="navWheelConfig"
       @route-change="addVisualLog({key: Date.now(), entry: 'change route'})"
     >
+      <template slot="center">
+        <font-awesome-icon icon="address-card" :style="{ color: 'grey' }" />
+      </template>
     </nav-wheel>
     <router-view></router-view>
     <ul>

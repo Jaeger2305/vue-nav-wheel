@@ -1,8 +1,13 @@
 <template>
   <div>
     <input v-model.number="scale" type="range" min="0.5" max="1.5" step="0.1" />
-    <svg :width="size" :height="size" style="border: solid" @mousemove="log">
     <span>{{ scale }}</span>
+    <svg
+      :width="size"
+      :height="size"
+      @mousemove="panSvg"
+      @mousewheel.prevent="scaleSvg"
+    >
       <g
         :transform="
           `translate(${panTranslation[0]}, ${panTranslation[1]}),
@@ -21,6 +26,13 @@
           :transform="`translate(${size / scale / 2}, ${size / scale / 2})`"
           @clicked="log"
         />
+          <g
+            :transform="
+              `translate(${centerTranslation[0]}, ${centerTranslation[1]}), scale(${centerScale}, ${centerScale})`
+            "
+          >
+            <slot name="center" />
+          </g>
       </g>
     </svg>
   </div>
@@ -50,6 +62,7 @@ export default {
         this.size / this.config.constants.scale / 2,
         this.size / this.config.constants.scale / 2
       ],
+      centerSlotBox: { width: 100, height: 100 },
     };
   },
   computed: {
@@ -57,6 +70,23 @@ export default {
       return [
         -(this.mouse[0] - this.size / 2),
         -(this.mouse[1] - this.size / 2)
+      ];
+    },
+    centerScale() {
+      return (
+        ((this.config.constants.startRadius / this.centerSlotBox.width) *
+          this.initialSize) /
+        this.size
+      );
+    },
+    centerTranslation() {
+      return [
+        (-this.centerSlotBox.width * this.config.constants.startRadius) /
+          this.centerSlotBox.width /
+          2,
+        (-this.centerSlotBox.height * this.config.constants.startRadius) /
+          this.centerSlotBox.height /
+          2
       ];
     }
   },
@@ -66,6 +96,10 @@ export default {
       console.log($event);
       this.mouse = [Math.abs($event.offsetX), Math.abs($event.offsetY)];
     }
+  },
+  mounted() {
+    // Reposition the slot to be inline with the radial wheel.
+    this.centerSlotBox = this.$slots.center[0].elm.getBBox();
   },
   watch: {
     $route() {
