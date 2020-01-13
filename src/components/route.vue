@@ -1,50 +1,55 @@
 <template>
-  <g @click.stop="selectRoute">
-    <g>
-      <path
-        class="nav-wheel__route-annular"
-        :style="navWheelMeta.style"
-        :d="routeArc"
-        filter="url(#dropshadow)"
-      />
-      <text
-        :x="labelCentroid[0]"
-        :y="labelCentroid[1]"
-        class="nav-wheel__route-label"
-        @click.stop="goToRoute(route.path)"
-        >{{ route.name }}</text
-      >
-      <transition-group
-        :name="
+  <g
+    @click.stop="selectRoute"
+    @mouseover.stop="$emit('route-mouseover', route)"
+    @mouseleave.stop="$emit('route-mouseleave', route)"
+  >
+    <path
+      :class="['nav-wheel__route-annular', {'nav-wheel__route-annular--active': showChildren}]"
+      :style="navWheelMeta.style"
+      :d="routeArc"
+      filter="url(#dropshadow)"
+    />
+    <text
+      :x="labelCentroid[0]"
+      :y="labelCentroid[1]"
+      class="nav-wheel__route-label"
+      @click.stop="goToRoute(route.path)"
+    >{{ route.name }}</text>
+    <transition-group
+      :name="
           navWheelMeta.transitionName || config.constants.defaultTransition
         "
-        tag="g"
-      >
-        <route
-          v-for="(child, index) in route.children"
-          v-show="showChildren"
-          :class="`nav-wheel__route-level-${level + 1}`"
-          :key="child.path"
-          :route="child"
-          :start-radius="outerRadius + config.constants.spaceBetweenParentChild"
-          :size="size"
-          :start-angle="
+      tag="g"
+    >
+      <route
+        v-for="(child, index) in route.children"
+        v-show="showChildren"
+        :class="`nav-wheel__route-level-${level + 1}`"
+        :key="child.path"
+        :route="child"
+        :start-radius="outerRadius + config.constants.spaceBetweenParentChild"
+        :size="size"
+        :start-angle="
             (segmentRadians / route.children.length) * index +
               startAngle -
               config.constants.childAngleSpread * route.children.length
           "
-          :end-angle="
+        :end-angle="
             (segmentRadians / route.children.length) * (index + 1) +
               startAngle -
               config.constants.childAngleSpread * route.children.length
           "
-          :pad-angle="
+        :pad-angle="
             (config.constants.padAngle / route.children.length) * segmentRadians
           "
-          :config="config"
-        />
-      </transition-group>
-    </g>
+        :config="config"
+        @route-select="$emit('route-select', $event)"
+        @route-deselect="$emit('route-deselect', $event)"
+        @route-mouseover="$emit('route-mouseover', $event)"
+        @route-mouseleave="$emit('route-mouseleave', $event)"
+      />
+    </transition-group>
   </g>
 </template>
 <style></style>
@@ -139,7 +144,7 @@ export default {
     },
     selectRoute($event) {
       this.showChildren = !this.showChildren;
-      this.$emit("clicked", $event);
+      this.$emit(this.showChildren ? "route-select" : "route-deselect", $event);
     }
   }
 };

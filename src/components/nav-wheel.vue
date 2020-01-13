@@ -40,7 +40,10 @@
             :start-radius="config.constants.startRadius"
             :config="config"
             :size="size"
-            @clicked="log"
+            @route-select="$emit('route-select', $event)"
+            @route-deselect="$emit('route-deselect', $event)"
+            @route-mouseover="$emit('route-mouseover', $event)"
+            @route-mouseleave="$emit('route-mouseleave', $event)"
           />
           <g
             :transform="
@@ -113,10 +116,6 @@ export default {
     }
   },
   methods: {
-    log($event) {
-      // eslint-disable-next-line no-console
-      console.log($event);
-    },
     panSvg($event) {
       this.mouse = [Math.abs($event.offsetX), Math.abs($event.offsetY)];
     },
