@@ -19,6 +19,21 @@
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
+        <linearGradient id="linear-gradient" gradientTransform="rotate(65)">
+          <stop class="linear-gradient-stop-1" offset="0%" />
+          <stop class="linear-gradient-stop-2" offset="50%" />
+          <stop class="linear-gradient-stop-3" offset="100%" />
+        </linearGradient>
+        <linearGradient id="linear-gradient--active" gradientTransform="rotate(65)">
+          <stop class="linear-gradient-stop-1--active" offset="0%" />
+          <stop class="linear-gradient-stop-2--active" offset="50%" />
+          <stop class="linear-gradient-stop-3--active" offset="100%" />
+        </linearGradient>
+        <linearGradient id="linear-gradient--hover" gradientTransform="rotate(65)">
+          <stop class="linear-gradient-stop-1--hover" offset="0%" />
+          <stop class="linear-gradient-stop-2--hover" offset="50%" />
+          <stop class="linear-gradient-stop-3--hover" offset="100%" />
+        </linearGradient>
       </defs>
       <g
         :transform="
@@ -82,7 +97,7 @@ export default {
   data() {
     return {
       scale: this.config.constants.scale,
-      mouse: [
+      panCoords: [
         this.size / this.config.constants.scale / 2,
         this.size / this.config.constants.scale / 2
       ],
@@ -93,8 +108,8 @@ export default {
   computed: {
     panTranslation() {
       return [
-        -(this.mouse[0] - this.size / 2),
-        -(this.mouse[1] - this.size / 2)
+        -(this.panCoords[0] - this.size / 2),
+        -(this.panCoords[1] - this.size / 2)
       ];
     },
     centerScale() {
@@ -117,13 +132,13 @@ export default {
   },
   methods: {
     panSvg($event) {
-      this.mouse = [Math.abs($event.offsetX), Math.abs($event.offsetY)];
+      this.panCoords = [Math.abs($event.offsetX), Math.abs($event.offsetY)];
     },
     scaleSvg($event) {
       this.scale -= $event.deltaY / 1000;
     },
     resetPan() {
-      this.mouse = [this.size / 2, this.size / 2];
+      this.panCoords = [this.size / 2, this.size / 2];
     }
   },
   mounted() {

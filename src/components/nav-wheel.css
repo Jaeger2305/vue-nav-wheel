@@ -1,13 +1,55 @@
+/* Annulars */
 .nav-wheel__route-annular {
-  fill: #41b883;
+  fill: url(#linear-gradient);
   stroke: #34495e;
-  stroke-width: 0.7%;
+  stroke-width: 0.5%;
+}
+.linear-gradient-stop-1 {
+  stop-color: #41b883;
+  stop-opacity: 1;
+}
+.linear-gradient-stop-2 {
+  stop-color: #41b883;
+  stop-opacity: 0.9;
+}
+.linear-gradient-stop-3 {
+  stop-color: #41b883;
+  stop-opacity: 0.4;
+}
+.nav-wheel__route-annular--active {
+  fill: url(#linear-gradient--active);
+}
+.linear-gradient-stop-1--active {
+  stop-color: #1f7950;
+  stop-opacity: 1;
+}
+.linear-gradient-stop-2--active {
+  stop-color: #1f7950;
+  stop-opacity: 0.9;
+}
+.linear-gradient-stop-3--active {
+  stop-color: #1f7950;
+  stop-opacity: 0.4;
 }
 .nav-wheel__route-annular:hover {
   transition-duration: 0.4s;
-  fill: #34495e;
+  fill: url(#linear-gradient--hover);
   stroke: #41b883;
 }
+.linear-gradient-stop-1--hover {
+  stop-color: #34495e;
+  stop-opacity: 1;
+}
+.linear-gradient-stop-2--hover {
+  stop-color: #34495e;
+  stop-opacity: 0.9;
+}
+.linear-gradient-stop-3--hover {
+  stop-color: #34495e;
+  stop-opacity: 0.4;
+}
+
+/* Labels */
 .nav-wheel__route-label {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 22px;
@@ -21,6 +63,7 @@
   font-size: 28px;
 }
 
+/* Animations */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
