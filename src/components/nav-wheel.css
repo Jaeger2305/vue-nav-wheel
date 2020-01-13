@@ -16,6 +16,21 @@
   stop-color: #41b883;
   stop-opacity: 0.4;
 }
+.nav-wheel__route-annular--visited {
+  fill: url(#linear-gradient--visited);
+}
+.linear-gradient-stop-1--visited {
+  stop-color: #1f7950;
+  stop-opacity: 1;
+}
+.linear-gradient-stop-2--visited {
+  stop-color: #1f7950;
+  stop-opacity: 0.9;
+}
+.linear-gradient-stop-3--visited {
+  stop-color: #1f7950;
+  stop-opacity: 0.4;
+}
 .nav-wheel__route-annular--active {
   fill: url(#linear-gradient--active);
 }

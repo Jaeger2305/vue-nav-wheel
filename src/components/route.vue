@@ -1,11 +1,7 @@
 <template>
-  <g
-    @click.stop="selectRoute"
-    @mouseover.stop="$emit('route-mouseover', route)"
-    @mouseleave.stop="$emit('route-mouseleave', route)"
-  >
+  <g @click.stop="selectRoute" @mouseover.stop="mouseover" @mouseleave.stop="mouseleave">
     <path
-      :class="['nav-wheel__route-annular', {'nav-wheel__route-annular--active': showChildren}]"
+      :class="['nav-wheel__route-annular', {'nav-wheel__route-annular--visited': showChildren}, {'nav-wheel__route-annular--active': isUnderCursor}]"
       :style="navWheelMeta.style"
       :d="routeArc"
       filter="url(#dropshadow)"
@@ -98,7 +94,8 @@ export default {
   data() {
     return {
       arcGenerator: arc(),
-      showChildren: false
+      showChildren: false,
+      isUnderCursor: false
     };
   },
   computed: {
@@ -145,6 +142,14 @@ export default {
     selectRoute($event) {
       this.showChildren = !this.showChildren;
       this.$emit(this.showChildren ? "route-select" : "route-deselect", $event);
+    },
+    mouseover() {
+      this.isUnderCursor = true;
+      this.$emit("route-mouseover", this.route);
+    },
+    mouseleave() {
+      this.isUnderCursor = false;
+      this.$emit("route-mouseleave", this.route);
     }
   }
 };
