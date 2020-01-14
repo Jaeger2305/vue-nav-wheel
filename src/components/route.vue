@@ -6,7 +6,7 @@
     @mouseleave.stop="mouseleave"
   >
     <path
-      :class="['nav-wheel__route-annular', {'nav-wheel__route-annular--visited': showChildren}, {'nav-wheel__route-annular--active': isUnderCursor}]"
+      :class="['nav-wheel__route-annular', {'nav-wheel__route-annular--disabled': navWheelMeta.isDisabled }, {'nav-wheel__route-annular--visited': showChildren}, {'nav-wheel__route-annular--active': isUnderCursor}]"
       :style="navWheelMeta.style"
       :d="routeArc"
       filter="url(#dropshadow)"
@@ -32,7 +32,7 @@
     <text
       :x="labelCentroid[0]"
       :y="labelCentroid[1]"
-      class="nav-wheel__route-label"
+      :class="['nav-wheel__route-label', { 'nav-wheel__route-label--disabled': navWheelMeta.isDisabled }]"
       @click.stop="goToRoute(route.path)"
     >{{ route.name }}</text>
     <transition-group
@@ -124,9 +124,11 @@ export default {
   },
   computed: {
     childRoutes() {
-      return (this.route.children || []).filter(
-        ({ meta }) => !((meta || {}).navWheel || {}).isHidden
-      );
+      return this.navWheelMeta.isDisabled
+        ? []
+        : (this.route.children || []).filter(
+            ({ meta }) => !((meta || {}).navWheel || {}).isHidden
+          );
     },
     routeArc() {
       return this.arcGenerator.cornerRadius(
@@ -174,9 +176,14 @@ export default {
   },
   methods: {
     goToRoute(path) {
+      if (this.navWheelMeta.isDisabled) return;
       this.$router.push({ path });
     },
     selectRoute($event) {
+      if (this.navWheelMeta.isDisabled) {
+        this.$emit("disabled-select", $event);
+        return;
+      }
       this.isRippling = true;
       // Debounce the rippling, so the effect isn't relentless.
       setTimeout(() => (this.isRippling = false), 500);

@@ -64,6 +64,10 @@
   stop-opacity: 0.4;
 }
 
+.nav-wheel__route-annular--disabled {
+  cursor: not-allowed;
+}
+
 .nav-wheel__route-ripple {
   fill: white;
   opacity: 0;
@@ -81,6 +85,9 @@
   fill: purple;
   transition-duration: 0.2s;
   font-size: 28px;
+}
+.nav-wheel__route-label--disabled {
+  cursor: not-allowed;
 }
 
 /* Animations */

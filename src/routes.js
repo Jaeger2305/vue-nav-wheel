@@ -94,7 +94,8 @@ export default [
         path: "/test3/child5",
         component: {
           template: '<div><font-awesome-icon icon="child" />child-5</div>'
-        }
+        },
+        meta: { navWheel: { isDisabled: true } }
       },
       {
         name: "test-name-3-child-6",
