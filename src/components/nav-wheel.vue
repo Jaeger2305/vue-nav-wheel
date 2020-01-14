@@ -19,14 +19,14 @@
       >
         <g :transform="`translate(${size / scale / 2}, ${size / scale / 2})`">
           <route
-            v-for="(route, index) in config.routes"
+            v-for="(route, index) in routes"
             class="nav-wheel__routes-0"
             :key="route.path"
             :route="route"
-            :start-angle="((2 * Math.PI) / config.routes.length) * index"
-            :end-angle="((2 * Math.PI) / config.routes.length) * (index + 1)"
+            :start-angle="((2 * Math.PI) / routes.length) * index"
+            :end-angle="((2 * Math.PI) / routes.length) * (index + 1)"
             :pad-angle="
-              (config.constants.padAngle / config.routes.length) * (2 * Math.PI)
+              (config.constants.padAngle / routes.length) * (2 * Math.PI)
             "
             :start-radius="config.constants.startRadius"
             :config="config"
@@ -106,6 +106,11 @@ export default {
           this.centerSlotBox.height /
           2
       ];
+    },
+    routes() {
+      return this.config.routes.filter(
+        ({ meta }) => !((meta || {}).navWheel || {}).isHidden
+      );
     }
   },
   methods: {

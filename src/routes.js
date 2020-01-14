@@ -86,7 +86,8 @@ export default [
         path: "/test3/child4",
         component: {
           template: '<div><font-awesome-icon icon="child" />child-4</div>'
-        }
+        },
+        meta: { navWheel: { isHidden: true } }
       },
       {
         name: "test-name-3-child-5",

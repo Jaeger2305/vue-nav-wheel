@@ -42,7 +42,7 @@
       tag="g"
     >
       <route
-        v-for="(child, index) in route.children"
+        v-for="(child, index) in childRoutes"
         v-show="showChildren"
         :class="`nav-wheel__route-level-${level + 1}`"
         :key="child.path"
@@ -50,17 +50,17 @@
         :start-radius="outerRadius + config.constants.spaceBetweenParentChild"
         :size="size"
         :start-angle="
-            (segmentRadiansWithPadding / route.children.length) * index +
+            (segmentRadiansWithPadding / childRoutes.length) * index +
               startAngle -
-              config.constants.childAngleSpread * route.children.length
+              config.constants.childAngleSpread * childRoutes.length
           "
         :end-angle="
-            (segmentRadiansWithPadding / route.children.length) * (index + 1) +
+            (segmentRadiansWithPadding / childRoutes.length) * (index + 1) +
               startAngle -
-              config.constants.childAngleSpread * route.children.length
+              config.constants.childAngleSpread * childRoutes.length
           "
         :pad-angle="
-            (config.constants.padAngle / route.children.length) * segmentRadiansWithPadding
+            (config.constants.padAngle / childRoutes.length) * segmentRadiansWithPadding
           "
         :config="config"
         @route-select="$emit('route-select', $event)"
@@ -123,6 +123,11 @@ export default {
     };
   },
   computed: {
+    childRoutes() {
+      return (this.route.children || []).filter(
+        ({ meta }) => !((meta || {}).navWheel || {}).isHidden
+      );
+    },
     routeArc() {
       return this.arcGenerator.cornerRadius(
         this.size / this.config.constants.cornerSharpness
@@ -144,7 +149,7 @@ export default {
         this.segmentRadians +
         this.config.constants.childAngleSpread *
         2 * // Adds the padding at the start and end.
-          (this.route.children || []).length
+          this.childRoutes.length
       );
     },
     segmentRadians() {
