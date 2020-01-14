@@ -1,11 +1,34 @@
 <template>
-  <g @click.stop="selectRoute" @mouseover.stop="mouseover" @mouseleave.stop="mouseleave">
+  <g
+    :ref="`route-${route.path}`"
+    @click.stop="selectRoute"
+    @mouseover.stop="mouseover"
+    @mouseleave.stop="mouseleave"
+  >
     <path
       :class="['nav-wheel__route-annular', {'nav-wheel__route-annular--visited': showChildren}, {'nav-wheel__route-annular--active': isUnderCursor}]"
       :style="navWheelMeta.style"
       :d="routeArc"
       filter="url(#dropshadow)"
     />
+    <defs>
+      <mask :id="`route-${route.path}-mask`" x="0" y="0" width="100" height="100">
+        <rect x="0" y="0" width="100" height="100" fill="black" />
+        <path :style="{fill: 'white'}" :d="routeArc" />
+      </mask>
+    </defs>
+    <g :mask="`url(#route-${route.path}-mask)`">
+      <transition name="ripple" tag="circle">
+        <circle
+          v-if="isRippling"
+          class="nav-wheel__route-ripple"
+          :style="{transformOrigin: `${labelCentroid[0]}px  ${labelCentroid[1]}px`}"
+          :cx="labelCentroid[0]"
+          :cy="labelCentroid[1]"
+          :r="rippleRadius"
+        />
+      </transition>
+    </g>
     <text
       :x="labelCentroid[0]"
       :y="labelCentroid[1]"
@@ -27,17 +50,17 @@
         :start-radius="outerRadius + config.constants.spaceBetweenParentChild"
         :size="size"
         :start-angle="
-            (segmentRadians / route.children.length) * index +
+            (segmentRadiansWithPadding / route.children.length) * index +
               startAngle -
               config.constants.childAngleSpread * route.children.length
           "
         :end-angle="
-            (segmentRadians / route.children.length) * (index + 1) +
+            (segmentRadiansWithPadding / route.children.length) * (index + 1) +
               startAngle -
               config.constants.childAngleSpread * route.children.length
           "
         :pad-angle="
-            (config.constants.padAngle / route.children.length) * segmentRadians
+            (config.constants.padAngle / route.children.length) * segmentRadiansWithPadding
           "
         :config="config"
         @route-select="$emit('route-select', $event)"
@@ -95,7 +118,8 @@ export default {
     return {
       arcGenerator: arc(),
       showChildren: false,
-      isUnderCursor: false
+      isUnderCursor: false,
+      isRippling: false
     };
   },
   computed: {
@@ -115,12 +139,20 @@ export default {
         this.size / this.config.constants.shrinkRouteScale + this.startRadius
       );
     },
-    segmentRadians() {
+    segmentRadiansWithPadding() {
       return (
-        this.endAngle -
-        this.startAngle +
-        this.config.constants.childAngleSpread * 2 * this.route.children.length
+        this.segmentRadians +
+        this.config.constants.childAngleSpread *
+        2 * // Adds the padding at the start and end.
+          (this.route.children || []).length
       );
+    },
+    segmentRadians() {
+      return this.endAngle - this.startAngle;
+    },
+    rippleRadius() {
+      const ratio = this.segmentRadians / (2 * Math.PI);
+      return ratio * this.outerRadius;
     },
     arcOptions() {
       return {
@@ -140,6 +172,9 @@ export default {
       this.$router.push({ path });
     },
     selectRoute($event) {
+      this.isRippling = true;
+      // Debounce the rippling, so the effect isn't relentless.
+      setTimeout(() => (this.isRippling = false), 500);
       this.showChildren = !this.showChildren;
       this.$emit(this.showChildren ? "route-select" : "route-deselect", $event);
     },

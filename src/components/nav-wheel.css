@@ -64,6 +64,11 @@
   stop-opacity: 0.4;
 }
 
+.nav-wheel__route-ripple {
+  fill: white;
+  opacity: 0;
+}
+
 /* Labels */
 .nav-wheel__route-label {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
@@ -85,5 +90,33 @@
   opacity: 1;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+.ripple-enter-active,
+.ripple-enter-to-active {
+  transition: all 800ms ease-out;
+}
+.ripple-leave-active,
+.ripple-leave-to-active {
+  transition: all 800ms ease-out;
+}
+
+.ripple-enter {
+  transform: scale(0);
+  opacity: 0.2;
+}
+
+.ripple-enter-to {
+  transform: scale(4);
+  opacity: 0.4;
+}
+
+.ripple-leave {
+  transform: scale(4);
+  opacity: 0.4;
+}
+.ripple-leave-to {
+  transform: scale(4);
   opacity: 0;
 }
