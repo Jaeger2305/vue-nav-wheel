@@ -35,8 +35,7 @@ Todo:
 1. Suggest some style configs (Vue style, high contrast, plain, colourful)
 2. mobile responsive (touch events, zoom)
 3. add some basic testing of the components
-4. Add event when disabled route clicked.
-5. Add functionality toggle to show only one hierarchy level, where clicking changes the root config to be the child, and there is an escape to get back to the parent.
+4. Add functionality toggle to show only one hierarchy level, where clicking changes the root config to be the child, and there is an escape to get back to the parent.
 
 Broad goals:
 

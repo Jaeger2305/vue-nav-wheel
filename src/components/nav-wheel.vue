@@ -35,6 +35,7 @@
             @route-deselect="$emit('route-deselect', $event)"
             @route-mouseover="$emit('route-mouseover', $event)"
             @route-mouseleave="$emit('route-mouseleave', $event)"
+            @disabled-select="$emit('disabled-select', $event)"
           />
           <g
             :transform="
