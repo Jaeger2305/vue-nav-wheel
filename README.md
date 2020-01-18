@@ -32,14 +32,11 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 Todo:
 
-6. host on npm and test for another project
-7. Add CSS styles
-8. Add full customisation of the styles
-   fill, icons, stokes, text font, filters, the config file
-9. Add feature customisations
-   appear on hover after time, appear on click, transparent filter. On click brings in focus
-10. Add various presets
-11. mobile responsive
+1. Suggest some style configs (Vue style, high contrast, plain, colourful)
+2. mobile responsive (touch events, zoom)
+3. add some basic testing of the components
+4. Add event when disabled route clicked.
+5. Add functionality toggle to show only one hierarchy level, where clicking changes the root config to be the child, and there is an escape to get back to the parent.
 
 Broad goals:
 
@@ -56,7 +53,11 @@ Shows:
 Stretch:
 
 1. Toggle between styles (nested squares, radial)
-2. Icon integration
-3. Animations
-4. Example using modal
-5. Using voice navigation
+2. Using voice navigation
+3. Refactor the recursion of the components, fair amount of duplication
+4. Allow configuration when registering the component, overriding with props.
+5. Start expanded children
+6. Allow buttons to be focusable/disable the panning
+7. Animate expand/shrink from the center
+8. Play animations on load, as a feature toggle
+9. Ripple out from mouse click instead of from center

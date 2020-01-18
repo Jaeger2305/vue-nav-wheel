@@ -6,7 +6,13 @@
     @mouseleave.stop="mouseleave"
   >
     <path
-      :class="['nav-wheel__route-annular', {'nav-wheel__route-annular--disabled': navWheelMeta.isDisabled }, {'nav-wheel__route-annular--visited': showChildren}, {'nav-wheel__route-annular--active': isUnderCursor}]"
+      :class="[
+        'nav-wheel__route-annular',
+        `nav-wheel__route-annular-${level}`,
+        { 'nav-wheel__route-annular--disabled': navWheelMeta.isDisabled },
+        { 'nav-wheel__route-annular--visited': showChildren },
+        { 'nav-wheel__route-annular--active': isUnderCursor }
+      ]"
       :style="navWheelMeta.style"
       :d="routeArc"
       filter="url(#dropshadow)"
@@ -14,7 +20,7 @@
     <defs>
       <mask :id="`route-${route.path}-mask`" x="0" y="0" width="100" height="100">
         <rect x="0" y="0" width="100" height="100" fill="black" />
-        <path :style="{fill: 'white'}" :d="routeArc" />
+        <path :style="{ fill: 'white' }" :d="routeArc" />
       </mask>
     </defs>
     <g :mask="`url(#route-${route.path}-mask)`">
@@ -22,7 +28,9 @@
         <circle
           v-if="isRippling"
           class="nav-wheel__route-ripple"
-          :style="{transformOrigin: `${labelCentroid[0]}px  ${labelCentroid[1]}px`}"
+          :style="{
+            transformOrigin: `${labelCentroid[0]}px  ${labelCentroid[1]}px`
+          }"
           :cx="labelCentroid[0]"
           :cy="labelCentroid[1]"
           :r="rippleRadius"
@@ -32,36 +40,38 @@
     <text
       :x="labelCentroid[0]"
       :y="labelCentroid[1]"
-      :class="['nav-wheel__route-label', { 'nav-wheel__route-label--disabled': navWheelMeta.isDisabled }]"
+      :class="[
+        'nav-wheel__route-label',
+        { 'nav-wheel__route-label--disabled': navWheelMeta.isDisabled }
+      ]"
       @click.stop="goToRoute(route.path)"
     >{{ route.name }}</text>
     <transition-group
-      :name="
-          navWheelMeta.transitionName || config.constants.defaultTransition
-        "
+      :name="navWheelMeta.transitionName || config.constants.defaultTransition"
       tag="g"
     >
       <route
         v-for="(child, index) in childRoutes"
-        v-show="showChildren"
         :class="`nav-wheel__route-level-${level + 1}`"
         :key="child.path"
+        :level="level + 1"
         :route="child"
         :start-radius="outerRadius + config.constants.spaceBetweenParentChild"
         :size="size"
         :start-angle="
-            (segmentRadiansWithPadding / childRoutes.length) * index +
-              startAngle -
-              config.constants.childAngleSpread * childRoutes.length
-          "
+          (segmentRadiansWithPadding / childRoutes.length) * index +
+            startAngle -
+            config.constants.childAngleSpread * childRoutes.length
+        "
         :end-angle="
-            (segmentRadiansWithPadding / childRoutes.length) * (index + 1) +
-              startAngle -
-              config.constants.childAngleSpread * childRoutes.length
-          "
+          (segmentRadiansWithPadding / childRoutes.length) * (index + 1) +
+            startAngle -
+            config.constants.childAngleSpread * childRoutes.length
+        "
         :pad-angle="
-            (config.constants.padAngle / childRoutes.length) * segmentRadiansWithPadding
-          "
+          (config.constants.padAngle / childRoutes.length) *
+            segmentRadiansWithPadding
+        "
         :config="config"
         @route-select="$emit('route-select', $event)"
         @route-deselect="$emit('route-deselect', $event)"
@@ -124,7 +134,7 @@ export default {
   },
   computed: {
     childRoutes() {
-      return this.navWheelMeta.isDisabled
+      return this.navWheelMeta.isDisabled || !this.showChildren
         ? []
         : (this.route.children || []).filter(
             ({ meta }) => !((meta || {}).navWheel || {}).isHidden

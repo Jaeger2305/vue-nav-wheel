@@ -52,15 +52,15 @@
   stroke: #41b883;
 }
 .linear-gradient-stop-1--hover {
-  stop-color: #34495e;
+  stop-color: #257e56;
   stop-opacity: 1;
 }
 .linear-gradient-stop-2--hover {
-  stop-color: #34495e;
+  stop-color: #41b883;
   stop-opacity: 0.9;
 }
 .linear-gradient-stop-3--hover {
-  stop-color: #34495e;
+  stop-color: #41b883;
   stop-opacity: 0.4;
 }
 
@@ -70,7 +70,6 @@
 
 .nav-wheel__route-ripple {
   fill: white;
-  opacity: 0;
 }
 
 /* Labels */
@@ -102,10 +101,12 @@
 
 .ripple-enter-active,
 .ripple-enter-to-active {
+  pointer-events: none;
   transition: all 800ms ease-out;
 }
 .ripple-leave-active,
 .ripple-leave-to-active {
+  pointer-events: none;
   transition: all 800ms ease-out;
 }
 
