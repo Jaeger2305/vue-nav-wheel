@@ -23,6 +23,7 @@
             class="nav-wheel__routes-0"
             :key="route.path"
             :route="route"
+            :is-parent-active-route="activeRoute.path === route.path"
             :start-angle="((2 * Math.PI) / routes.length) * index"
             :end-angle="((2 * Math.PI) / routes.length) * (index + 1)"
             :pad-angle="
@@ -31,11 +32,20 @@
             :start-radius="config.constants.startRadius"
             :config="config"
             :size="size"
-            @route-select="$emit('route-select', $event)"
+            :active-route="activeRoute"
+            :active-hierarchy-key="activeHierarchyKey"
+            :parent-hierarchy-key="[route.hierarchyKey]"
+            @route-select="
+              $event => {
+                $emit('route-select', $event);
+                activeRoute = $event;
+              }
+            "
             @route-deselect="$emit('route-deselect', $event)"
             @route-mouseover="$emit('route-mouseover', $event)"
             @route-mouseleave="$emit('route-mouseleave', $event)"
             @disabled-select="$emit('disabled-select', $event)"
+            @update-hierarchy="activeHierarchyKey = $event"
           />
           <g
             :transform="
@@ -57,6 +67,7 @@
 <script>
 import Route from "./route";
 import NavWheelDefs from "./nav-wheel-defs";
+import uuidv4 from "uuid/v4";
 
 export default {
   components: {
@@ -81,7 +92,9 @@ export default {
         this.size / this.config.constants.scale / 2
       ],
       centerSlotBox: { width: 100, height: 100 },
-      initialSize: this.size
+      initialSize: this.size,
+      activeRoute: {},
+      activeHierarchyKey: []
     };
   },
   computed: {
@@ -108,9 +121,18 @@ export default {
           2
       ];
     },
+    keyedRoutes() {
+      return this.config.routes.map(route => ({
+        ...route,
+        hierarchyKey: uuidv4()
+      }));
+    },
     routes() {
-      return this.config.routes.filter(
-        ({ meta }) => !((meta || {}).navWheel || {}).isHidden
+      return this.keyedRoutes.filter(
+        ({ meta, hierarchyKey }) =>
+          !((meta || {}).navWheel || {}).isHidden &&
+          (this.activeHierarchyKey.includes(hierarchyKey) ||
+            !this.activeHierarchyKey.length)
       );
     }
   },

@@ -1,16 +1,17 @@
 <template>
   <g
     :ref="`route-${route.path}`"
-    @click.stop="selectRoute"
+    @click.stop="selectRoute(route)"
     @mouseover.stop="mouseover"
     @mouseleave.stop="mouseleave"
   >
     <path
+      v-if="isParentRouteVisible"
       :class="[
         'nav-wheel__route-annular',
         `nav-wheel__route-annular-${level}`,
         { 'nav-wheel__route-annular--disabled': navWheelMeta.isDisabled },
-        { 'nav-wheel__route-annular--visited': showChildren },
+        { 'nav-wheel__route-annular--visited': isActiveRoute },
         { 'nav-wheel__route-annular--active': isUnderCursor }
       ]"
       :style="navWheelMeta.style"
@@ -38,6 +39,7 @@
       </transition>
     </g>
     <text
+      v-if="isParentRouteVisible"
       :x="labelCentroid[0]"
       :y="labelCentroid[1]"
       :class="[
@@ -55,8 +57,11 @@
         :class="`nav-wheel__route-level-${level + 1}`"
         :key="child.path"
         :level="level + 1"
+        :active-route="activeRoute"
+        :active-hierarchy-key="activeHierarchyKey"
+        :parent-hierarchy-key="[...parentHierarchyKey, child.hierarchyKey]"
         :route="child"
-        :start-radius="outerRadius + config.constants.spaceBetweenParentChild"
+        :start-radius="isParentRouteVisible ? outerRadius + config.constants.spaceBetweenParentChild : startRadius"
         :size="size"
         :start-angle="
           (segmentRadiansWithPadding / childRoutes.length) * index +
@@ -77,6 +82,7 @@
         @route-deselect="$emit('route-deselect', $event)"
         @route-mouseover="$emit('route-mouseover', $event)"
         @route-mouseleave="$emit('route-mouseleave', $event)"
+        @update-hierarchy="$emit('update-hierarchy', $event)"
       />
     </transition-group>
   </g>
@@ -85,6 +91,8 @@
 
 <script>
 import { arc } from "d3-shape";
+import uuidv4 from "uuid/v4";
+import { intersection } from 'lodash';
 
 export default {
   components: {
@@ -94,6 +102,11 @@ export default {
     route: {
       type: Object,
       required: true
+    },
+    activeRoute: {
+      type: Object,
+      required: false,
+      default: () => ({})
     },
     startAngle: {
       type: Number,
@@ -122,22 +135,42 @@ export default {
     level: {
       type: Number,
       default: 0
+    },
+    parentHierarchyKey: {
+      type: Array,
+      required: true
+    },
+    activeHierarchyKey: {
+      type: Array,
+      required: true
     }
   },
   data() {
     return {
       arcGenerator: arc(),
-      showChildren: false,
       isUnderCursor: false,
       isRippling: false
     };
   },
   computed: {
+    keyedChildRoutes() {
+      return (this.route.children || []).map(route => ({
+        ...route,
+        hierarchyKey: uuidv4()
+      })).filter(({ meta }) => !((meta || {}).navWheel || {}).isHidden);
+    },
     childRoutes() {
-      return this.navWheelMeta.isDisabled || !this.showChildren
+      return this.navWheelMeta.isDisabled
         ? []
-        : (this.route.children || []).filter(
-            ({ meta }) => !((meta || {}).navWheel || {}).isHidden
+        : this.keyedChildRoutes.filter(
+            ({ hierarchyKey }) => {
+              const commonAncestorHierarchyDepth = intersection(this.activeHierarchyKey, this.parentHierarchyKey).length;
+              const distanceFromCommonAncestor = this.activeHierarchyKey.length - commonAncestorHierarchyDepth;
+              const isChildInDrawDistance = this.activeHierarchyKey.includes(hierarchyKey) || distanceFromCommonAncestor < this.config.constants.hierarchyLevelsDisplayLimit
+              const isChildInFocusDistance = distanceFromCommonAncestor < this.config.constants.hierarchyLevelFocus
+              const isActiveRoute = this.activeHierarchyKey.slice(-1)[0] === this.parentHierarchyKey.slice(-1)[0];
+              return (isChildInFocusDistance || this.activeHierarchyKey.includes(hierarchyKey) || isActiveRoute) && this.isRouteShowingChildren && isChildInDrawDistance
+            }
           );
     },
     routeArc() {
@@ -182,6 +215,20 @@ export default {
     },
     navWheelMeta() {
       return (this.route.meta || {}).navWheel || {};
+    },
+    isActiveRoute() {
+      return (
+        this.activeHierarchyKey.slice(-1)[0] ===
+        this.parentHierarchyKey.slice(-1)[0]
+      );
+    },
+    isRouteShowingChildren() {
+      return this.activeHierarchyKey.includes(this.route.hierarchyKey);
+    },
+    isParentRouteVisible() {
+      const commonAncestorHierarchyDepth = intersection(this.activeHierarchyKey, this.parentHierarchyKey).length;
+      const distanceFromCommonAncestor = this.activeHierarchyKey.length - commonAncestorHierarchyDepth;
+      return distanceFromCommonAncestor < this.config.constants.hierarchyLevelsDisplayLimit
     }
   },
   methods: {
@@ -197,8 +244,13 @@ export default {
       this.isRippling = true;
       // Debounce the rippling, so the effect isn't relentless.
       setTimeout(() => (this.isRippling = false), 500);
-      this.showChildren = !this.showChildren;
-      this.$emit(this.showChildren ? "route-select" : "route-deselect", $event);
+      this.$emit(
+        "update-hierarchy",
+        !this.isRouteShowingChildren
+          ? this.parentHierarchyKey
+          : this.parentHierarchyKey.slice(0, -1)
+      );
+      this.$emit("route-select", $event);
     },
     mouseover() {
       this.isUnderCursor = true;
