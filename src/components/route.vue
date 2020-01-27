@@ -66,12 +66,12 @@
         :start-angle="
           (segmentRadiansWithPadding / childRoutes.length) * index +
             startAngle -
-            config.constants.childAngleSpread * childRoutes.length
+            childAngleSpread * childRoutes.length
         "
         :end-angle="
           (segmentRadiansWithPadding / childRoutes.length) * (index + 1) +
             startAngle -
-            config.constants.childAngleSpread * childRoutes.length
+            childAngleSpread * childRoutes.length
         "
         :pad-angle="
           (config.constants.padAngle / childRoutes.length) *
@@ -206,10 +206,17 @@ export default {
         this.size / this.config.constants.shrinkRouteScale + this.startRadius
       );
     },
+    childAngleSpread() {
+      const configCAS = this.config.constants.childAngleSpread;
+      // Find the maximum CAS before it needs to be capped:
+      const maxCAS =
+        (Math.PI * 2 - this.segmentRadians) / this.childRoutes.length ** 2;
+      return Math.min(configCAS, maxCAS);
+    },
     segmentRadiansWithPadding() {
       return (
         this.segmentRadians +
-        this.config.constants.childAngleSpread *
+        this.childAngleSpread *
         2 * // Adds the padding at the start and end.
           this.childRoutes.length
       );
