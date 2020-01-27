@@ -92,7 +92,7 @@
 <script>
 import { arc } from "d3-shape";
 import uuidv4 from "uuid/v4";
-import { intersection } from 'lodash';
+import { intersection } from "lodash";
 
 export default {
   components: {
@@ -154,24 +154,41 @@ export default {
   },
   computed: {
     keyedChildRoutes() {
-      return (this.route.children || []).map(route => ({
-        ...route,
-        hierarchyKey: uuidv4()
-      })).filter(({ meta }) => !((meta || {}).navWheel || {}).isHidden);
+      return (this.route.children || [])
+        .map(route => ({
+          ...route,
+          hierarchyKey: uuidv4()
+        }))
+        .filter(({ meta }) => !((meta || {}).navWheel || {}).isHidden);
     },
     childRoutes() {
       return this.navWheelMeta.isDisabled
         ? []
-        : this.keyedChildRoutes.filter(
-            ({ hierarchyKey }) => {
-              const commonAncestorHierarchyDepth = intersection(this.activeHierarchyKey, this.parentHierarchyKey).length;
-              const distanceFromCommonAncestor = this.activeHierarchyKey.length - commonAncestorHierarchyDepth;
-              const isChildInDrawDistance = this.activeHierarchyKey.includes(hierarchyKey) || distanceFromCommonAncestor < this.config.constants.hierarchyLevelsDisplayLimit
-              const isChildInFocusDistance = distanceFromCommonAncestor < this.config.constants.hierarchyLevelFocus
-              const isActiveRoute = this.activeHierarchyKey.slice(-1)[0] === this.parentHierarchyKey.slice(-1)[0];
-              return (isChildInFocusDistance || this.activeHierarchyKey.includes(hierarchyKey) || isActiveRoute) && this.isRouteShowingChildren && isChildInDrawDistance
-            }
-          );
+        : this.keyedChildRoutes.filter(({ hierarchyKey }) => {
+            const commonAncestorHierarchyDepth = intersection(
+              this.activeHierarchyKey,
+              this.parentHierarchyKey
+            ).length;
+            const distanceFromCommonAncestor =
+              this.activeHierarchyKey.length - commonAncestorHierarchyDepth;
+            const isChildInDrawDistance =
+              this.activeHierarchyKey.includes(hierarchyKey) ||
+              distanceFromCommonAncestor <
+                this.config.constants.hierarchyLevelsDisplayLimit;
+            const isChildInFocusDistance =
+              distanceFromCommonAncestor <
+              this.config.constants.hierarchyLevelFocus;
+            const isActiveRoute =
+              this.activeHierarchyKey.slice(-1)[0] ===
+              this.parentHierarchyKey.slice(-1)[0];
+            return (
+              (isChildInFocusDistance ||
+                this.activeHierarchyKey.includes(hierarchyKey) ||
+                isActiveRoute) &&
+              this.isRouteShowingChildren &&
+              isChildInDrawDistance
+            );
+          });
     },
     routeArc() {
       return this.arcGenerator.cornerRadius(
@@ -226,9 +243,16 @@ export default {
       return this.activeHierarchyKey.includes(this.route.hierarchyKey);
     },
     isParentRouteVisible() {
-      const commonAncestorHierarchyDepth = intersection(this.activeHierarchyKey, this.parentHierarchyKey).length;
-      const distanceFromCommonAncestor = this.activeHierarchyKey.length - commonAncestorHierarchyDepth;
-      return distanceFromCommonAncestor < this.config.constants.hierarchyLevelsDisplayLimit
+      const commonAncestorHierarchyDepth = intersection(
+        this.activeHierarchyKey,
+        this.parentHierarchyKey
+      ).length;
+      const distanceFromCommonAncestor =
+        this.activeHierarchyKey.length - commonAncestorHierarchyDepth;
+      return (
+        distanceFromCommonAncestor <
+        this.config.constants.hierarchyLevelsDisplayLimit
+      );
     }
   },
   methods: {
