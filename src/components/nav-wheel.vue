@@ -102,8 +102,8 @@ export default {
   computed: {
     panTranslation() {
       return [
-        -(this.panCoords[0] - this.size / 2),
-        -(this.panCoords[1] - this.size / 2)
+        -(this.panCoords[0] - this.size / 2) * this.scale,
+        -(this.panCoords[1] - this.size / 2) * this.scale
       ];
     },
     centerScale() {
