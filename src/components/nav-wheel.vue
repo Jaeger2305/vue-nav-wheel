@@ -6,6 +6,7 @@
       class="nav-wheel__svg"
       :width="size"
       :height="size"
+      @touchstart.prevent
       @mousemove="panSvg"
       @mouseleave="resetPan"
       @mousewheel.prevent="scaleSvg"
@@ -46,6 +47,7 @@
             @route-mouseleave="$emit('route-mouseleave', $event)"
             @disabled-select="$emit('disabled-select', $event)"
             @update-hierarchy="activeHierarchyKey = $event"
+            @pan-route="panToTargetRect"
           />
           <g
             :transform="
@@ -138,6 +140,8 @@ export default {
   },
   methods: {
     panSvg($event) {
+      if (!this.config.constants.isPanOnMouseMoveEnabled) return;
+
       this.panCoords = [Math.abs($event.offsetX), Math.abs($event.offsetY)];
     },
     scaleSvg($event) {
@@ -145,6 +149,14 @@ export default {
     },
     resetPan() {
       this.panCoords = [this.size / 2, this.size / 2];
+    },
+    panToTargetRect(targetRect) {
+      if (!this.config.constants.isPanOnSelectEnabled) return;
+
+      this.panCoords = [
+        this.size / 2 + (targetRect.x + targetRect.width / 2),
+        this.size / 2 + (targetRect.y + targetRect.height / 2)
+      ];
     }
   },
   mounted() {
