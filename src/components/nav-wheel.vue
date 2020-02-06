@@ -137,13 +137,13 @@ export default {
     }
   },
   methods: {
+    scaleSvg($event) {
+      this.scale -= $event.deltaY / 1000;
+    },
     panSvg($event) {
       if (!this.config.constants.isPanOnMouseMoveEnabled) return;
 
       this.panCoords = [Math.abs($event.offsetX), Math.abs($event.offsetY)];
-    },
-    scaleSvg($event) {
-      this.scale -= $event.deltaY / 1000;
     },
     resetPan() {
       this.panCoords = [this.size / 2, this.size / 2];
