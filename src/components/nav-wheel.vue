@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!-- <input v-model.number="scale" type="range" min="0.5" max="1.5" step="0.1" />
-    <span>{{ scale }}</span>-->
     <svg
       class="nav-wheel__svg"
       :width="size"
