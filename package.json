@@ -2,17 +2,18 @@
   "name": "vue-nav-wheel",
   "version": "0.1.0",
   "private": true,
-  "main": "dist/nav-wheel.umd.min.js",
-  "module": "dist/nav-wheel.esm.js",
-  "unpkg": "dist/nav-wheel.min.js",
-  "browser": {
-    "./sfc": "src/components/nav-wheel.vue"
-  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name nav-wheel ./src/entry.js",
+    "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
+  "main": "dist/nav-wheel.umd.min.js",
+  "module": "dist/nav-wheel.esm.js",
+  "browser": {
+    "./sfc": "src/components/nav-wheel.vue"
+  },
+  "unpkg": "dist/nav-wheel.min.js",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
@@ -27,7 +28,9 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",
     "@vue/cli-plugin-eslint": "^4.1.0",
+    "@vue/cli-plugin-unit-jest": "^4.1.2",
     "@vue/cli-service": "^4.1.0",
+    "@vue/test-utils": "1.0.0-beta.29",
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
@@ -54,7 +57,17 @@
     },
     "parserOptions": {
       "parser": "babel-eslint"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/*.{spec,test}.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
+      }
+    ]
   },
   "browserslist": [
     "> 1%",
