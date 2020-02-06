@@ -285,13 +285,12 @@ export default {
       );
       this.$emit("route-select", $event);
     },
-    touchRoute(route) {
+    async touchRoute(route) {
       this.selectRoute(route);
       // Selecting the route can cause a repositioning of this route.
       // Wait for the dom re-render before updating the pan position to prevent lagging behind the position.
-      this.$nextTick(() =>
-        this.$emit("pan-route", this.$refs[`route-${route.path}`].getBBox())
-      );
+      await this.$nextTick();
+      this.$emit("pan-route", this.$refs[`route-${route.path}`].getBBox());
     },
     mouseover() {
       this.isUnderCursor = true;
