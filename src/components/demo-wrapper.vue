@@ -7,6 +7,8 @@
     <demo-styles />
     <hr />
     <!-- Show configuring the functionality -->
+    <demo-functionality />
+    <hr />
     <!-- Show adding something into the slot -->
     <demo-slot />
     <hr />
@@ -39,6 +41,7 @@
 <script>
 import DemoShapes from "./demo-shapes";
 import DemoStyles from "./demo-styles";
+import DemoFunctionality from "./demo-functionality";
 import DemoSlot from "./demo-slot";
 import DemoConditional from "./demo-conditional";
 import DemoModal from "./demo-modal";
@@ -46,6 +49,7 @@ export default {
   components: {
     DemoShapes,
     DemoStyles,
+    DemoFunctionality,
     DemoSlot,
     DemoConditional,
     DemoModal
