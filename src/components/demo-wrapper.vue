@@ -25,16 +25,40 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-::v-deep .codebox {
+<style lang="scss">
+.codebox {
   height: 500px;
   width: 500px;
   overflow: auto;
 }
-::v-deep .simple-flex {
+.simple-flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+body {
+  font-size: 110%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+h1,
+h2 {
+  text-decoration: underline;
+}
+button {
+  font-family: "Candara";
+  font-weight: bold;
+  font-size: 110%;
+  background-color: #4caf50; /* Green */
+  color: white;
+  border-radius: 0.5em;
+  transition-duration: 0.4s;
+  padding: 1em;
+  height: 4em;
+}
+
+button:hover {
+  background-color: lightgray;
+  color: #1f7950;
 }
 </style>
 

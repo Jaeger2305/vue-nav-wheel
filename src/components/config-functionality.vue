@@ -1,15 +1,14 @@
 <template>
   <div class="config-container">
     <div class="input-container">
-      <label>Pan on select (affects touchscreens)</label>
       <input v-model="inputIsPanOnSelectEnabled" type="checkbox" />
+      <label>Pan on select (affects touchscreens)</label>
     </div>
     <div class="input-container">
-      <label>Pan on mousemove</label>
       <input v-model="inputIsPanOnMouseMoveEnabled" type="checkbox" />
+      <label>Pan on mousemove</label>
     </div>
     <div class="input-container">
-      <label>Hierarchy levels display limit</label>
       <input
         v-model.number="inputHierarchyLevelsDisplayLimit"
         type="range"
@@ -17,9 +16,9 @@
         max="5"
         step="1"
       />
+      <label>Hierarchy levels display limit</label>
     </div>
     <div class="input-container">
-      <label>Hierarchy level at which to focus</label>
       <input
         v-model.number="inputHierarchyLevelFocus"
         type="range"
@@ -27,21 +26,11 @@
         max="5"
         step="1"
       />
+      <label>Hierarchy level at which to focus</label>
     </div>
     <button @click="randomize">Randomize</button>
   </div>
 </template>
-
-<style>
-.config-container {
-  display: flex;
-}
-.input-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-</style>
 
 <script>
 function randomInRange(min, max) {

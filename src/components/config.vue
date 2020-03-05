@@ -1,28 +1,64 @@
 <template>
   <div class="config-container">
     <div class="input-container">
+      <input
+        v-model.number="inputPadAngle"
+        type="range"
+        min="0"
+        max="0.5"
+        step="0.01"
+      />
       <label>Pad angle</label>
-      <input v-model.number="inputPadAngle" type="range" min="0" max="0.5" step="0.01" />
     </div>
     <div class="input-container">
+      <input
+        v-model.number="inputSpaceBetweenParentChild"
+        type="range"
+        min="0"
+        max="100"
+        step="1"
+      />
       <label>Space between parent and child</label>
-      <input v-model.number="inputSpaceBetweenParentChild" type="range" min="0" max="100" step="1" />
     </div>
     <div class="input-container">
+      <input
+        v-model.number="inputShrinkRouteScale"
+        type="range"
+        min="1"
+        max="10"
+        step="1"
+      />
       <label>Shrink route scale</label>
-      <input v-model.number="inputShrinkRouteScale" type="range" min="1" max="10" step="1" />
     </div>
     <div class="input-container">
+      <input
+        v-model.number="inputCornerSharpness"
+        type="range"
+        min="0"
+        max="300"
+        step="10"
+      />
       <label>Corner sharpness</label>
-      <input v-model.number="inputCornerSharpness" type="range" min="0" max="300" step="10" />
     </div>
     <div class="input-container">
+      <input
+        v-model.number="inputStartRadius"
+        type="range"
+        min="0"
+        max="300"
+        step="10"
+      />
       <label>Start radius</label>
-      <input v-model.number="inputStartRadius" type="range" min="0" max="300" step="10" />
     </div>
     <div class="input-container">
+      <input
+        v-model.number="inputChildAngleSpread"
+        type="range"
+        min="0"
+        max="0.5"
+        step="0.01"
+      />
       <label>Child angle spread</label>
-      <input v-model.number="inputChildAngleSpread" type="range" min="0" max="0.5" step="0.01" />
     </div>
     <button @click="randomize">Randomize</button>
   </div>
@@ -36,6 +72,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 1em;
+  width: 10em;
+}
+label {
+  text-align: center;
 }
 </style>
 
