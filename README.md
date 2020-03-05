@@ -33,9 +33,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 Todo:
 
 1. Suggest some style configs (Vue style, high contrast, plain, colourful)
-3. add some basic testing of the components
-4. Add functionality to limit display/focus of a hierarchy level for the parent too.
-5. Demo use of that functionality in the exampels too..
 
 Broad goals:
 
