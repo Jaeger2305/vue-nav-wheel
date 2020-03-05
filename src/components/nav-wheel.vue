@@ -4,10 +4,12 @@
       class="nav-wheel__svg"
       :width="size"
       :height="size"
-      @touchstart.prevent
+      @touchstart="startPinch"
+      @touchmove="touchmove"
+      @touchend="endPinch"
       @mousemove="panSvg"
       @mouseleave="resetPan"
-      @mousewheel.prevent="scaleSvg"
+      @wheel.prevent="scaleSvg"
     >
       <nav-wheel-defs />
       <g
@@ -20,6 +22,7 @@
           <route
             v-for="(route, index) in routes"
             class="nav-wheel__routes-0"
+            :id="route.path"
             :key="route.path"
             :route="route"
             :is-parent-active-route="activeRoute.path === route.path"
@@ -94,7 +97,8 @@ export default {
       centerSlotBox: { width: 100, height: 100 },
       initialSize: this.size,
       activeRoute: {},
-      activeHierarchyKey: []
+      activeHierarchyKey: [],
+      isTouchingDown: false
     };
   },
   computed: {
@@ -140,6 +144,20 @@ export default {
     scaleSvg($event) {
       this.scale -= $event.deltaY / 1000;
     },
+    startPinch(e) {
+      this.isTouchingDown = e.touches.length > 1;
+    },
+    touchmove(e) {
+      if (!this.isTouchingDown) return;
+      const dist = Math.hypot(
+        e.touches[0].pageX - e.touches[1].pageX,
+        e.touches[0].pageY - e.touches[1].pageY
+      );
+      this.scaleSvg({ deltaY: dist });
+    },
+    endPinch() {
+      this.isTouchingDown = false;
+    },
     panSvg($event) {
       if (!this.config.constants.isPanOnMouseMoveEnabled) return;
 
@@ -170,6 +188,9 @@ export default {
   watch: {
     $route() {
       this.$emit("route-change");
+    },
+    isTouchingDown() {
+      this.$emit("test");
     }
   }
 };

@@ -48,7 +48,10 @@
         { 'nav-wheel__route-label--disabled': navWheelMeta.isDisabled }
       ]"
       @click.stop="goToRoute(route.path)"
-    >{{ route.name }}</text>
+      @touchstart.prevent.stop="goToRoute(route.path)"
+    >
+      {{ route.name }}
+    </text>
     <transition-group
       :name="navWheelMeta.transitionName || config.constants.defaultTransition"
       tag="g"
