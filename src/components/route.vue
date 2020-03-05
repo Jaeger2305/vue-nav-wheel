@@ -1,6 +1,7 @@
 <template>
   <g
     :ref="`route-${route.path}`"
+    :id="`nav-wheel__route-annular__group__${route.hierarchyKey}`"
     @click.stop="selectRoute(route)"
     @touchstart.prevent.stop="touchRoute(route)"
     @mouseover.stop="mouseover"
@@ -8,6 +9,7 @@
   >
     <path
       v-if="isParentRouteVisible"
+      :id="`nav-wheel__route-annular__path__${route.hierarchyKey}`"
       :class="[
         'nav-wheel__route-annular',
         `nav-wheel__route-annular-${level}`,
@@ -20,7 +22,13 @@
       filter="url(#dropshadow)"
     />
     <defs>
-      <mask :id="`route-${route.path}-mask`" x="0" y="0" width="100" height="100">
+      <mask
+        :id="`route-${route.path}-mask`"
+        x="0"
+        y="0"
+        width="100"
+        height="100"
+      >
         <rect x="0" y="0" width="100" height="100" fill="black" />
         <path :style="{ fill: 'white' }" :d="routeArc" />
       </mask>
@@ -31,7 +39,7 @@
           v-if="isRippling"
           class="nav-wheel__route-ripple"
           :style="{
-            transformOrigin: `${labelCentroid[0]}px  ${labelCentroid[1]}px`
+            transformOrigin: `${labelCentroid[0]}px ${labelCentroid[1]}px`
           }"
           :cx="labelCentroid[0]"
           :cy="labelCentroid[1]"
@@ -41,6 +49,7 @@
     </g>
     <text
       v-if="isParentRouteVisible"
+      :id="`nav-wheel__route-label__text__${route.hierarchyKey}`"
       :x="labelCentroid[0]"
       :y="labelCentroid[1]"
       :class="[
