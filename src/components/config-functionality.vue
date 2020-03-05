@@ -1,7 +1,7 @@
 <template>
   <div class="config-container">
     <div class="input-container">
-      <label>Pan on select</label>
+      <label>Pan on select (affects touchscreens)</label>
       <input v-model="inputIsPanOnSelectEnabled" type="checkbox" />
     </div>
     <div class="input-container">
@@ -20,7 +20,13 @@
     </div>
     <div class="input-container">
       <label>Hierarchy level at which to focus</label>
-      <input v-model.number="inputHierarchyLevelFocus" type="range" min="1" max="5" step="1" />
+      <input
+        v-model.number="inputHierarchyLevelFocus"
+        type="range"
+        min="1"
+        max="5"
+        step="1"
+      />
     </div>
     <button @click="randomize">Randomize</button>
   </div>
