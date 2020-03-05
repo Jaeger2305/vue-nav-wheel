@@ -1,10 +1,12 @@
 {
   "name": "vue-nav-wheel",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.0-alpha.0",
+  "private": false,
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name nav-wheel ./src/entry.js",
+    "test": "npm run test:unit",
     "test:unit": "vue-cli-service test:unit",
     "test:debug": "node --inspect-brk node_modules/.bin/vue-cli-service test:unit --no-cache --watch --runInBand",
     "lint": "vue-cli-service lint"
