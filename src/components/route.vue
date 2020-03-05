@@ -67,29 +67,18 @@
     >
       <route
         v-for="(child, index) in childRoutes"
-        :class="`nav-wheel__route-level-${level + 1}`"
         :key="child.path"
-        :level="level + 1"
-        :active-route="activeRoute"
-        :active-hierarchy-key="activeHierarchyKey"
-        :parent-hierarchy-key="[...parentHierarchyKey, child.hierarchyKey]"
         :route="child"
-        :start-radius="isParentRouteVisible ? outerRadius + config.constants.spaceBetweenParentChild : startRadius"
         :size="size"
-        :start-angle="
-          (segmentRadiansWithPadding / childRoutes.length) * index +
-            startAngle -
-            childAngleSpread * childRoutes.length
-        "
-        :end-angle="
-          (segmentRadiansWithPadding / childRoutes.length) * (index + 1) +
-            startAngle -
-            childAngleSpread * childRoutes.length
-        "
-        :pad-angle="
-          (config.constants.padAngle / childRoutes.length) *
-            segmentRadiansWithPadding
-        "
+        :active-route="activeRoute"
+        :class="`nav-wheel__route-level-${child.level}`"
+        :level="child.level"
+        :active-hierarchy-key="activeHierarchyKey"
+        :parent-hierarchy-key="child.parentHierarchyKey"
+        :start-radius="child.startRadius"
+        :start-angle="child.segmentRadians * index + child.startRadians"
+        :end-angle="child.segmentRadians * (index + 1) + child.startRadians"
+        :pad-angle="child.padAngle"
         :config="config"
         @route-select="$emit('route-select', $event)"
         @route-deselect="$emit('route-deselect', $event)"
@@ -176,7 +165,8 @@ export default {
         .filter(({ meta }) => !((meta || {}).navWheel || {}).isHidden);
     },
     childRoutes() {
-      return this.navWheelMeta.isDisabled
+      // Filter the config routes down according to the active state.
+      const childRoutesWithoutDerived = this.navWheelMeta.isDisabled
         ? []
         : this.keyedChildRoutes.filter(({ hierarchyKey }) => {
             const commonAncestorHierarchyDepth = intersection(
@@ -203,6 +193,33 @@ export default {
               isChildInDrawDistance
             );
           });
+
+      // Derive some attributes here, to help keep logic minimal in the template.
+
+      // Get the child angle spread.
+      const configCAS = this.config.constants.childAngleSpread;
+      // Find the maximum CAS before it needs to be capped:
+      const maxCAS =
+        (Math.PI * 2 - this.segmentRadians) /
+        childRoutesWithoutDerived.length ** 2;
+      const childAngleSpread = Math.min(configCAS, maxCAS);
+      const segmentRadiansWithPadding =
+        (this.segmentRadians + childAngleSpread * 2) /
+        childRoutesWithoutDerived.length;
+      return childRoutesWithoutDerived.map(child => ({
+        ...child,
+        level: this.level + 1,
+        parentHierarchyKey: [...this.parentHierarchyKey, child.hierarchyKey],
+        segmentRadians: segmentRadiansWithPadding,
+        startRadians:
+          this.startAngle - childAngleSpread * childRoutesWithoutDerived.length,
+        startRadius: this.isParentRouteVisible
+          ? this.outerRadius + this.config.constants.spaceBetweenParentChild
+          : this.startRadius,
+        padAngle:
+          (this.config.constants.padAngle / childRoutesWithoutDerived.length) *
+          segmentRadiansWithPadding
+      }));
     },
     routeArc() {
       return this.arcGenerator.cornerRadius(
@@ -218,21 +235,6 @@ export default {
     outerRadius() {
       return (
         this.size / this.config.constants.shrinkRouteScale + this.startRadius
-      );
-    },
-    childAngleSpread() {
-      const configCAS = this.config.constants.childAngleSpread;
-      // Find the maximum CAS before it needs to be capped:
-      const maxCAS =
-        (Math.PI * 2 - this.segmentRadians) / this.childRoutes.length ** 2;
-      return Math.min(configCAS, maxCAS);
-    },
-    segmentRadiansWithPadding() {
-      return (
-        this.segmentRadians +
-        this.childAngleSpread *
-        2 * // Adds the padding at the start and end.
-          this.childRoutes.length
       );
     },
     segmentRadians() {
