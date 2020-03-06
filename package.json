@@ -1,8 +1,17 @@
 {
   "name": "vue-nav-wheel",
   "version": "0.1.0-alpha.0",
-  "private": false,
   "license": "MIT",
+  "description": "",
+  "author": {
+    "name": "Richard Webb",
+    "email": "rwebb2305@gmail.com",
+    "url": "https://www.linkedin.com/in/richard-webb-09516a115/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jaeger2305/vue-nav-wheel"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name nav-wheel ./src/entry.js",
