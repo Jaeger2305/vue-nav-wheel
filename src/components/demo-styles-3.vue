@@ -1,7 +1,13 @@
 <template>
   <div>
-    <p>Using Vue's transition classes, a custom entry animation can be created. This shows a simple fly in and out of the routes.</p>
-    <code-nav-wheel :isShowingCode="isShowingCss" :nav-wheel-config="navWheelConfig">
+    <p>
+      Using Vue's transition classes, a custom entry animation can be created.
+      This shows a simple fly in and out of the routes.
+    </p>
+    <code-nav-wheel
+      :isShowingCode="isShowingCss"
+      :nav-wheel-config="navWheelConfig"
+    >
       <template slot="code">
         <pre>
         ::v-deep .fly-in-left-enter-active,
@@ -15,7 +21,8 @@
         ::v-deep .fly-in-left-leave-to {
           transform: translate(200%, 0);
         }
-      </pre>
+      </pre
+        >
       </template>
     </code-nav-wheel>
   </div>
@@ -41,13 +48,13 @@ import routes from "../routes";
 import CodeNavWheel from "./code-nav-wheel.vue";
 export default {
   components: {
-    CodeNavWheel
+    CodeNavWheel,
   },
   props: {
     isShowingCss: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
@@ -56,10 +63,10 @@ export default {
         ...navWheelConfig,
         constants: {
           ...navWheelConfig.constants,
-          defaultTransition: "fly-in-left"
-        }
-      }
+          defaultTransition: "fly-in-left",
+        },
+      },
     };
-  }
+  },
 };
 </script>

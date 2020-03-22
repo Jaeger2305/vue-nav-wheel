@@ -1,7 +1,11 @@
 <template>
   <div>
     <h2>Demo slot</h2>
-    <p>A single slot is available for the center position. This must be an SVG, and it must be a single element. It can be wrapped in a "g" tag. The element will be scaled to match the available space in the center.</p>
+    <p>
+      A single slot is available for the center position. This must be an SVG,
+      and it must be a single element. It can be wrapped in a "g" tag. The
+      element will be scaled to match the available space in the center.
+    </p>
     <div class="simple-flex">
       <pre class="codebox">{{ code }}</pre>
       <nav-wheel :size="600" :config="navWheelConfig">
@@ -29,13 +33,13 @@ import routes from "../routes";
 import NavWheel from "./nav-wheel.vue";
 export default {
   components: {
-    NavWheel
+    NavWheel,
   },
   data() {
     return {
       navWheelConfig: {
         routes,
-        ...navWheelConfig
+        ...navWheelConfig,
       },
       code: `<nav-wheel :size="600" :config="navWheelConfig">
   <template slot="center">
@@ -51,8 +55,8 @@ export default {
       </g>
     </g>
   </template>
-</nav-wheel>`
+</nav-wheel>`,
     };
-  }
+  },
 };
 </script>

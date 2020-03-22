@@ -14,7 +14,10 @@
       <stop class="linear-gradient-stop-2" offset="50%" />
       <stop class="linear-gradient-stop-3" offset="100%" />
     </linearGradient>
-    <linearGradient id="linear-gradient--visited" gradientTransform="rotate(65)">
+    <linearGradient
+      id="linear-gradient--visited"
+      gradientTransform="rotate(65)"
+    >
       <stop class="linear-gradient-stop-1--visited" offset="0%" />
       <stop class="linear-gradient-stop-2--visited" offset="50%" />
       <stop class="linear-gradient-stop-3--visited" offset="100%" />

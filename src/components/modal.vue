@@ -14,7 +14,9 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              <button class="modal-default-button" @click="$emit('close')">OK</button>
+              <button class="modal-default-button" @click="$emit('close')">
+                OK
+              </button>
             </slot>
           </div>
         </div>
@@ -22,7 +24,6 @@
     </div>
   </transition>
 </template>
-
 
 <style scoped>
 .modal-mask {

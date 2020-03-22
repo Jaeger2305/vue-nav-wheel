@@ -15,7 +15,7 @@
         `nav-wheel__route-annular-${level}`,
         { 'nav-wheel__route-annular--disabled': navWheelMeta.isDisabled },
         { 'nav-wheel__route-annular--visited': isActiveRoute },
-        { 'nav-wheel__route-annular--active': isUnderCursor }
+        { 'nav-wheel__route-annular--active': isUnderCursor },
       ]"
       :style="navWheelMeta.style"
       :d="routeArc"
@@ -39,7 +39,7 @@
           v-if="isRippling"
           class="nav-wheel__route-ripple"
           :style="{
-            transformOrigin: `${labelCentroid[0]}px ${labelCentroid[1]}px`
+            transformOrigin: `${labelCentroid[0]}px ${labelCentroid[1]}px`,
           }"
           :cx="labelCentroid[0]"
           :cy="labelCentroid[1]"
@@ -54,7 +54,7 @@
       :y="labelCentroid[1]"
       :class="[
         'nav-wheel__route-label',
-        { 'nav-wheel__route-label--disabled': navWheelMeta.isDisabled }
+        { 'nav-wheel__route-label--disabled': navWheelMeta.isDisabled },
       ]"
       @click.stop="goToRoute(route.path)"
       @touchstart.prevent.stop="goToRoute(route.path)"
@@ -99,68 +99,68 @@ import { intersection } from "lodash";
 
 export default {
   components: {
-    Route: () => import("./route.vue")
+    Route: () => import("./route.vue"),
   },
   props: {
     route: {
       type: Object,
-      required: true
+      required: true,
     },
     activeRoute: {
       type: Object,
       required: false,
-      default: () => ({})
+      default: () => ({}),
     },
     startAngle: {
       type: Number,
-      required: true
+      required: true,
     },
     endAngle: {
       type: Number,
-      required: true
+      required: true,
     },
     size: {
       type: Number,
-      default: 1
+      default: 1,
     },
     startRadius: {
       type: Number,
-      required: true
+      required: true,
     },
     padAngle: {
       type: Number,
-      required: true
+      required: true,
     },
     config: {
       type: Object,
-      required: true
+      required: true,
     },
     level: {
       type: Number,
-      default: 0
+      default: 0,
     },
     parentHierarchyKey: {
       type: Array,
-      required: true
+      required: true,
     },
     activeHierarchyKey: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       arcGenerator: arc(),
       isUnderCursor: false,
-      isRippling: false
+      isRippling: false,
     };
   },
   computed: {
     keyedChildRoutes() {
       return (this.route.children || [])
-        .map(route => ({
+        .map((route) => ({
           ...route,
-          hierarchyKey: uuidv4()
+          hierarchyKey: uuidv4(),
         }))
         .filter(({ meta }) => !((meta || {}).navWheel || {}).isHidden);
     },
@@ -206,7 +206,7 @@ export default {
       const segmentRadiansWithPadding =
         (this.segmentRadians + childAngleSpread * 2) /
         childRoutesWithoutDerived.length;
-      return childRoutesWithoutDerived.map(child => ({
+      return childRoutesWithoutDerived.map((child) => ({
         ...child,
         level: this.level + 1,
         parentHierarchyKey: [...this.parentHierarchyKey, child.hierarchyKey],
@@ -218,7 +218,7 @@ export default {
           : this.startRadius,
         padAngle:
           (this.config.constants.padAngle / childRoutesWithoutDerived.length) *
-          segmentRadiansWithPadding
+          segmentRadiansWithPadding,
       }));
     },
     routeArc() {
@@ -250,7 +250,7 @@ export default {
         outerRadius: this.outerRadius,
         startAngle: this.startAngle,
         endAngle: this.endAngle,
-        padAngle: this.padAngle
+        padAngle: this.padAngle,
       };
     },
     navWheelMeta() {
@@ -276,7 +276,7 @@ export default {
         distanceFromCommonAncestor <
         this.config.constants.hierarchyLevelsDisplayLimit
       );
-    }
+    },
   },
   methods: {
     goToRoute(path) {
@@ -313,7 +313,7 @@ export default {
     mouseleave() {
       this.isUnderCursor = false;
       this.$emit("route-mouseleave", this.route);
-    }
-  }
+    },
+  },
 };
 </script>

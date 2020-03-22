@@ -5,7 +5,7 @@ import Route from "./route.vue";
 import {
   defaultRouteProps,
   mockedRoute,
-  disabledRouteWithKey
+  disabledRouteWithKey,
 } from "../assets/example-data";
 import uuidv4 from "uuid/v4";
 
@@ -13,7 +13,7 @@ describe("route.vue", () => {
   // Events
   it("tests the ref is set up", () => {
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     expect(
       wrapper.vm.$refs[`route-${defaultRouteProps.route.path}`]
@@ -24,8 +24,8 @@ describe("route.vue", () => {
     const wrapper = shallowMount(Route, {
       propsData: defaultRouteProps,
       methods: {
-        selectRouteSpy
-      }
+        selectRouteSpy,
+      },
     });
     wrapper
       .get(`#nav-wheel__route-annular__group__${wrapper.vm.route.hierarchyKey}`)
@@ -34,7 +34,7 @@ describe("route.vue", () => {
   });
   it("registers the ref of the route properly", () => {
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     expect(wrapper.get({ ref: `route-${wrapper.vm.route.path}` }));
   });
@@ -47,7 +47,7 @@ describe("route.vue", () => {
     // Running the tests in browser has the SVG elements, so the tests succeed. See the following for a reproduction:
     // https://codesandbox.io/s/floral-glade-k1hu0
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     wrapper
       .get(`#nav-wheel__route-annular__group__${wrapper.vm.route.hierarchyKey}`)
@@ -56,7 +56,7 @@ describe("route.vue", () => {
   });
   it("identifies when the mouse is over a route", () => {
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     wrapper
       .get(`#nav-wheel__route-annular__group__${wrapper.vm.route.hierarchyKey}`)
@@ -66,7 +66,7 @@ describe("route.vue", () => {
   });
   it("identifies when a mouse has left a route", () => {
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     wrapper
       .get(`#nav-wheel__route-annular__group__${wrapper.vm.route.hierarchyKey}`)
@@ -82,8 +82,8 @@ describe("route.vue", () => {
     const wrapper = shallowMount(Route, {
       propsData: defaultRouteProps,
       methods: {
-        selectRouteSpy
-      }
+        selectRouteSpy,
+      },
     });
     wrapper
       .get(`#nav-wheel__route-annular__group__${wrapper.vm.route.hierarchyKey}`)
@@ -92,7 +92,7 @@ describe("route.vue", () => {
   });
   it("emits event on child route select", () => {
     const wrapper = mount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     wrapper.get(Route).vm.$emit("route-select", mockedRoute);
     expect(wrapper.emitted()["route-select"]).toBeTruthy();
@@ -100,7 +100,7 @@ describe("route.vue", () => {
   });
   it("emits event on child route deselect", () => {
     const wrapper = mount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     wrapper.get(Route).vm.$emit("route-deselect", mockedRoute);
     expect(wrapper.emitted()["route-deselect"]).toBeTruthy();
@@ -108,7 +108,7 @@ describe("route.vue", () => {
   });
   it("emits event on child route mouseover", () => {
     const wrapper = mount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     wrapper.get(Route).vm.$emit("route-mouseover", mockedRoute);
     expect(wrapper.emitted()["route-mouseover"]).toBeTruthy();
@@ -116,7 +116,7 @@ describe("route.vue", () => {
   });
   it("emits event on child route mouseleave", () => {
     const wrapper = mount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     wrapper.get(Route).vm.$emit("route-mouseleave", mockedRoute);
     expect(wrapper.emitted()["route-mouseleave"]).toBeTruthy();
@@ -124,7 +124,7 @@ describe("route.vue", () => {
   });
   it("emits event on child pan route", () => {
     const wrapper = mount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     wrapper.get(Route).vm.$emit("pan-route", mockedRoute);
     expect(wrapper.emitted()["pan-route"]).toBeTruthy();
@@ -132,7 +132,7 @@ describe("route.vue", () => {
   });
   it("emits event on hierarchy update", () => {
     const wrapper = mount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     wrapper.get(Route).vm.$emit("update-hierarchy", mockedRoute);
     expect(wrapper.emitted()["update-hierarchy"]).toBeTruthy();
@@ -151,10 +151,10 @@ describe("route.vue", () => {
           constants: {
             ...defaultRouteProps.config.constants,
             hierarchyLevelsDisplayLimit,
-            hierarchyLevelFocus
-          }
-        }
-      }
+            hierarchyLevelFocus,
+          },
+        },
+      },
     });
     // If the focus level is above the distance to the route in the hierarchy, then the route should be shown
     // If the focus level is below the distance to the route in the hierarchy, then only one child should be shown
@@ -180,13 +180,13 @@ describe("route.vue", () => {
       wrapper.vm.route.hierarchyKey, // root
       // -1 to account for the root
       // [2], [2.1]
-      ...Array.from({ length: hierarchyLevelFocus - 1 }, uuidv4)
+      ...Array.from({ length: hierarchyLevelFocus - 1 }, uuidv4),
     ];
     // Set the hierarchy to be something other than the one we're currently looking at.
     // They do have a common ancestor, within focus distance.
     wrapper.setProps({
       activeHierarchyKey: mockHierarchyInFocusDistance,
-      parentHierarchyKey: mockHierarchyInFocusDistance.slice(0, 1)
+      parentHierarchyKey: mockHierarchyInFocusDistance.slice(0, 1),
     });
     expect(wrapper.vm.childRoutes.length).toEqual(
       wrapper.vm.keyedChildRoutes.length
@@ -197,7 +197,7 @@ describe("route.vue", () => {
       wrapper.vm.route.hierarchyKey, // [root]
       // -1 to account for the root
       // [2], [2.1], [2.1.1], [2.1.1.1]
-      ...Array.from({ length: hierarchyLevelFocus }, uuidv4)
+      ...Array.from({ length: hierarchyLevelFocus }, uuidv4),
     ];
     wrapper.setProps({ activeHierarchyKey: mockHierarchyOutOfFocusDistance });
     // The distance to the root common ancestor is greater than the config limit, so the route doesn't keep its children.
@@ -214,23 +214,23 @@ describe("route.vue", () => {
           constants: {
             ...defaultRouteProps.config.constants,
             hierarchyLevelsDisplayLimit,
-            hierarchyLevelFocus
-          }
-        }
-      }
+            hierarchyLevelFocus,
+          },
+        },
+      },
     });
 
     const mockHierarchyInFocusDistance = [
       wrapper.vm.route.hierarchyKey, // root
       // -1 to account for the root and -1 to get below the limit
       // [2] and [2.1]
-      ...Array.from({ length: hierarchyLevelFocus - 2 }, uuidv4)
+      ...Array.from({ length: hierarchyLevelFocus - 2 }, uuidv4),
     ];
     // Set the hierarchy to be something other than the one we're currently looking at.
     // They do have a common ancestor, within focus distance.
     wrapper.setProps({
       activeHierarchyKey: mockHierarchyInFocusDistance,
-      parentHierarchyKey: [uuidv4()]
+      parentHierarchyKey: [uuidv4()],
     });
     expect(wrapper.vm.childRoutes.length).toEqual(
       wrapper.vm.keyedChildRoutes.length
@@ -240,7 +240,7 @@ describe("route.vue", () => {
     const mockHierarchyOutOfFocusDistance = [
       wrapper.vm.route.hierarchyKey, // [root]
       // [2], [2.1], [2.1.1]
-      ...Array.from({ length: hierarchyLevelFocus - 1 }, uuidv4)
+      ...Array.from({ length: hierarchyLevelFocus - 1 }, uuidv4),
     ];
     wrapper.setProps({ activeHierarchyKey: mockHierarchyOutOfFocusDistance });
     // The distance to the root common ancestor is greater than the config limit, so the route doesn't keep its children.
@@ -253,7 +253,7 @@ describe("route.vue", () => {
     const hierarchyLevelFocus =
       defaultRouteProps.config.constants.hierarchyLevelFocus;
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     const mockUnrelatedActiveHierarchy = Array.from(
       { length: hierarchyLevelFocus },
@@ -285,17 +285,17 @@ describe("route.vue", () => {
           ...defaultRouteProps.config,
           constants: {
             ...defaultRouteProps.config.constants,
-            hierarchyLevelsDisplayLimit
-          }
-        }
-      }
+            hierarchyLevelsDisplayLimit,
+          },
+        },
+      },
     });
     const mockUnrelatedActiveHierarchyWithinLimit = Array.from(
       { length: hierarchyLevelsDisplayLimit - 1 },
       uuidv4
     );
     wrapper.setProps({
-      activeHierarchyKey: mockUnrelatedActiveHierarchyWithinLimit
+      activeHierarchyKey: mockUnrelatedActiveHierarchyWithinLimit,
     });
 
     await Vue.nextTick();
@@ -310,7 +310,7 @@ describe("route.vue", () => {
       uuidv4
     );
     wrapper.setProps({
-      activeHierarchyKey: mockUnrelatedActiveHierarchySurpassedLimit
+      activeHierarchyKey: mockUnrelatedActiveHierarchySurpassedLimit,
     });
 
     await Vue.nextTick();
@@ -331,24 +331,24 @@ describe("route.vue", () => {
           ...defaultRouteProps.config,
           constants: {
             ...defaultRouteProps.config.constants,
-            spaceBetweenParentChild
-          }
-        }
-      }
+            spaceBetweenParentChild,
+          },
+        },
+      },
     });
     const mockActiveHierarchy = [
       wrapper.vm.route.hierarchyKey,
       ...Array.from(
         {
           length:
-            defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit - 1
+            defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit - 1,
         },
         uuidv4
-      )
+      ),
     ];
     wrapper.setProps({
       activeHierarchyKey: mockActiveHierarchy,
-      parentHierarchyKey: mockActiveHierarchy.slice(0, 1)
+      parentHierarchyKey: mockActiveHierarchy.slice(0, 1),
     });
     expect(wrapper.vm.childRoutes.length).toBeGreaterThan(0);
 
@@ -364,9 +364,9 @@ describe("route.vue", () => {
         ...defaultRouteProps.config,
         constants: {
           ...defaultRouteProps.config.constants,
-          spaceBetweenParentChild: newSpaceBetweenParentChild
-        }
-      }
+          spaceBetweenParentChild: newSpaceBetweenParentChild,
+        },
+      },
     });
     wrapper.vm.childRoutes.forEach(({ startRadius }) => {
       expect(startRadius).toEqual(
@@ -378,7 +378,7 @@ describe("route.vue", () => {
   // Simple config
   it("hides child routes according to route meta", () => {
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     const testConfigHiddenRoute = defaultRouteProps.route.children.find(
       ({ meta: { navWheel: { isHidden } } = { navWheel: {} } }) => isHidden
@@ -402,24 +402,24 @@ describe("route.vue", () => {
           ...defaultRouteProps.config,
           constants: {
             ...defaultRouteProps.config.constants,
-            padAngle: defaultPadAngle
-          }
-        }
-      }
+            padAngle: defaultPadAngle,
+          },
+        },
+      },
     });
     const mockActiveHierarchy = [
       wrapper.vm.route.hierarchyKey,
       ...Array.from(
         {
           length:
-            defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit - 1
+            defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit - 1,
         },
         uuidv4
-      )
+      ),
     ];
     wrapper.setProps({
       activeHierarchyKey: mockActiveHierarchy,
-      parentHierarchyKey: mockActiveHierarchy.slice(0, 1)
+      parentHierarchyKey: mockActiveHierarchy.slice(0, 1),
     });
     expect(wrapper.vm.childRoutes.length).toBeGreaterThan(0);
 
@@ -435,9 +435,9 @@ describe("route.vue", () => {
         ...defaultRouteProps.config,
         constants: {
           ...defaultRouteProps.config.constants,
-          padAngle: largerPadAngle
-        }
-      }
+          padAngle: largerPadAngle,
+        },
+      },
     });
     wrapper.vm.childRoutes.forEach(({ padAngle, segmentRadians }) => {
       expect(padAngle).toEqual(
@@ -449,7 +449,7 @@ describe("route.vue", () => {
   // Visuals
   it("applies a unique ID to the visible route objects", () => {
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     expect(
       wrapper.get(
@@ -466,8 +466,8 @@ describe("route.vue", () => {
     const wrapper = shallowMount(Route, {
       propsData: {
         ...defaultRouteProps,
-        route: disabledRouteWithKey
-      }
+        route: disabledRouteWithKey,
+      },
     });
     expect(
       wrapper
@@ -484,11 +484,11 @@ describe("route.vue", () => {
   });
   it("applies visited styling to the active route", () => {
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     wrapper.setProps({
       activeHierarchyKey: [wrapper.vm.route.hierarchyKey],
-      parentHierarchyKey: [wrapper.vm.route.hierarchyKey]
+      parentHierarchyKey: [wrapper.vm.route.hierarchyKey],
     });
     expect(wrapper.vm.isActiveRoute).toBe(true);
     expect(
@@ -501,7 +501,7 @@ describe("route.vue", () => {
   });
   it("applies active styling to the route underneath the cursor", async () => {
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     wrapper.setData({ isUnderCursor: true });
     await Vue.nextTick();
@@ -517,7 +517,7 @@ describe("route.vue", () => {
   // Internals
   it("keys child routes", () => {
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
 
     // Check the key exists.
@@ -536,7 +536,7 @@ describe("route.vue", () => {
   it("generates an arc from d3", () => {
     // Not a great test, but it's something, and there's no sense in testing an external library.
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     expect(wrapper.vm.routeArc).toBeTruthy();
     expect(typeof wrapper.vm.routeArc).toBe("string");
@@ -544,28 +544,28 @@ describe("route.vue", () => {
   it("calculates the center of an arc from d3", () => {
     // Not a great test, but it's something, and there's no sense in testing an external library.
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     expect(Array.isArray(wrapper.vm.labelCentroid)).toBe(true);
     expect(wrapper.vm.labelCentroid.length).toBe(2);
   });
   it("applies a level to all child routes, and those children are a level higher", () => {
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     const mockActiveHierarchy = [
       wrapper.vm.route.hierarchyKey,
       ...Array.from(
         {
           length:
-            defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit - 1
+            defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit - 1,
         },
         uuidv4
-      )
+      ),
     ];
     wrapper.setProps({
       activeHierarchyKey: mockActiveHierarchy,
-      parentHierarchyKey: mockActiveHierarchy.slice(0, 1)
+      parentHierarchyKey: mockActiveHierarchy.slice(0, 1),
     });
     expect(wrapper.vm.childRoutes.length).toBeGreaterThan(0);
     wrapper.vm.childRoutes.forEach(({ level }) => {
@@ -582,10 +582,10 @@ describe("route.vue", () => {
           ...defaultRouteProps.config,
           constants: {
             ...defaultRouteProps.config.constants,
-            hierarchyLevelFocus
-          }
-        }
-      }
+            hierarchyLevelFocus,
+          },
+        },
+      },
     });
 
     const mockUnrelatedActiveHierarchy = Array.from(
@@ -607,24 +607,24 @@ describe("route.vue", () => {
           ...defaultRouteProps.config,
           constants: {
             ...defaultRouteProps.config.constants,
-            childAngleSpread
-          }
-        }
-      }
+            childAngleSpread,
+          },
+        },
+      },
     });
     const mockActiveHierarchy = [
       wrapper.vm.route.hierarchyKey,
       ...Array.from(
         {
           length:
-            defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit - 1
+            defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit - 1,
         },
         uuidv4
-      )
+      ),
     ];
     wrapper.setProps({
       activeHierarchyKey: mockActiveHierarchy,
-      parentHierarchyKey: mockActiveHierarchy.slice(0, 1)
+      parentHierarchyKey: mockActiveHierarchy.slice(0, 1),
     });
     expect(wrapper.vm.childRoutes.length).toBeGreaterThan(0);
     wrapper.vm.childRoutes.forEach(({ segmentRadians }) => {
@@ -637,9 +637,9 @@ describe("route.vue", () => {
         ...defaultRouteProps.config,
         constants: {
           ...defaultRouteProps.config.constants,
-          childAngleSpread: 0.5
-        }
-      }
+          childAngleSpread: 0.5,
+        },
+      },
     });
     wrapper.vm.childRoutes.forEach(({ segmentRadians }) => {
       expect(segmentRadians).toBeGreaterThan(
@@ -656,24 +656,24 @@ describe("route.vue", () => {
           ...defaultRouteProps.config,
           constants: {
             ...defaultRouteProps.config.constants,
-            childAngleSpread
-          }
-        }
-      }
+            childAngleSpread,
+          },
+        },
+      },
     });
     const mockActiveHierarchy = [
       wrapper.vm.route.hierarchyKey,
       ...Array.from(
         {
           length:
-            defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit - 1
+            defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit - 1,
         },
         uuidv4
-      )
+      ),
     ];
     wrapper.setProps({
       activeHierarchyKey: mockActiveHierarchy,
-      parentHierarchyKey: mockActiveHierarchy.slice(0, 1)
+      parentHierarchyKey: mockActiveHierarchy.slice(0, 1),
     });
     expect(wrapper.vm.childRoutes.length).toBeGreaterThan(0);
     const radiansInCircle = Math.PI * 2;
@@ -688,13 +688,13 @@ describe("route.vue", () => {
       propsData: {
         ...defaultRouteProps,
         startAngle: 0,
-        endAngle: 1
-      }
+        endAngle: 1,
+      },
     });
     expect(wrapper.vm.segmentRadians).toBe(1);
     wrapper.setProps({
       startAngle: 1,
-      endAngle: 3
+      endAngle: 3,
     });
     expect(wrapper.vm.segmentRadians).toBe(2);
   });
@@ -703,13 +703,13 @@ describe("route.vue", () => {
       propsData: {
         ...defaultRouteProps,
         startAngle: 0,
-        endAngle: 1
-      }
+        endAngle: 1,
+      },
     });
     const originalRippleSize = wrapper.vm.rippleRadius;
     wrapper.setProps({
       startAngle: 0,
-      endAngle: 2
+      endAngle: 2,
     });
     const resizedRippleSize = wrapper.vm.rippleRadius;
 
@@ -717,7 +717,7 @@ describe("route.vue", () => {
   });
   it("retrieves the nav wheel metadata", () => {
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     expect(wrapper.vm.navWheelMeta).toBeTruthy();
     expect(wrapper.vm.navWheelMeta).toEqual(
@@ -734,72 +734,73 @@ describe("route.vue", () => {
     // Route 1.1 parent key is 1, but if 1.1 has been selected, it will update the active hierarchy with a concatenation of its parents + its own.
     // Thus, [root, 1] becomes [root, 1, 1.1], and route 1.1 is active.
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     wrapper.setProps({
       activeHierarchyKey: [wrapper.vm.route.hierarchyKey],
-      parentHierarchyKey: [wrapper.vm.route.hierarchyKey]
+      parentHierarchyKey: [wrapper.vm.route.hierarchyKey],
     });
     expect(wrapper.vm.isActiveRoute).toBe(true);
 
     const mockNestedHierarchy = [uuidv4(), wrapper.vm.route.hierarchyKey];
     wrapper.setProps({
       activeHierarchyKey: [...mockNestedHierarchy],
-      parentHierarchyKey: [...mockNestedHierarchy]
+      parentHierarchyKey: [...mockNestedHierarchy],
     });
     expect(wrapper.vm.isActiveRoute).toBe(true);
     wrapper.setProps({
       activeHierarchyKey: [...mockNestedHierarchy],
-      parentHierarchyKey: mockNestedHierarchy.slice(0, -1)
+      parentHierarchyKey: mockNestedHierarchy.slice(0, -1),
     });
     expect(wrapper.vm.isActiveRoute).toBe(false);
   });
   it("can determine if the route is showing visible children", () => {
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     const mockActiveHierarchy = [
       wrapper.vm.route.hierarchyKey,
       ...Array.from(
         {
           length:
-            defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit - 1
+            defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit - 1,
         },
         uuidv4
-      )
+      ),
     ];
     wrapper.setProps({
-      activeHierarchyKey: mockActiveHierarchy
+      activeHierarchyKey: mockActiveHierarchy,
     });
     expect(wrapper.vm.isRouteShowingChildren).toBe(true);
   });
   it("can determine if the parent route is still visible", () => {
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     const mockActiveHierarchy = [
       ...Array.from(
         {
           length:
-            defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit - 1
+            defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit - 1,
         },
         uuidv4
-      )
+      ),
     ];
     wrapper.setProps({
-      activeHierarchyKey: mockActiveHierarchy
+      activeHierarchyKey: mockActiveHierarchy,
     });
     expect(wrapper.vm.isParentRouteVisible).toBe(true);
     const mockDifferentHierarchy = [
       ...Array.from(
         {
-          length: defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit
+          length:
+            defaultRouteProps.config.constants.hierarchyLevelsDisplayLimit,
         },
         uuidv4
-      )
+      ),
     ];
     wrapper.setProps({
-      activeHierarchyKey: mockDifferentHierarchy
+      activeHierarchyKey: mockDifferentHierarchy,
     });
     expect(wrapper.vm.isParentRouteVisible).toBe(false);
   });
@@ -809,9 +810,9 @@ describe("route.vue", () => {
       propsData: defaultRouteProps,
       mocks: {
         $router: {
-          push: routerPushSpy
-        }
-      }
+          push: routerPushSpy,
+        },
+      },
     });
     wrapper
       .get(`#nav-wheel__route-label__text__${wrapper.vm.route.hierarchyKey}`)
@@ -827,16 +828,16 @@ describe("route.vue", () => {
           ...defaultRouteProps.route,
           meta: {
             navWheel: {
-              isDisabled: true
-            }
-          }
-        }
+              isDisabled: true,
+            },
+          },
+        },
       },
       mocks: {
         $router: {
-          push: routerPushSpy
-        }
-      }
+          push: routerPushSpy,
+        },
+      },
     });
     wrapper
       .get(`#nav-wheel__route-label__text__${wrapper.vm.route.hierarchyKey}`)
@@ -845,7 +846,7 @@ describe("route.vue", () => {
   });
   it("matches the route mask to the route shape", () => {
     const wrapper = shallowMount(Route, {
-      propsData: defaultRouteProps
+      propsData: defaultRouteProps,
     });
     expect(
       wrapper.get(`[mask="url(#route-${wrapper.vm.route.path}-mask)"]`)

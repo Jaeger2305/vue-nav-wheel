@@ -17,51 +17,51 @@ const testConfig = {
       name: "1",
       path: "/styles-2-1",
       component: {
-        template: "<div></div>"
+        template: "<div></div>",
       },
-      meta: { navWheel: { style: { stroke: "red" }, isDisabled: true } }
+      meta: { navWheel: { style: { stroke: "red" }, isDisabled: true } },
     },
     {
       name: "2",
       path: "/styles-2/2",
       component: {
-        template: "<div></div>"
+        template: "<div></div>",
       },
       meta: {
         navWheel: {
           transitionName: "fade",
-          style: { stroke: "yellow", fill: "purple" }
-        }
+          style: { stroke: "yellow", fill: "purple" },
+        },
       },
       children: [
         {
           name: "2-1",
           path: "/styles-2/2/1",
           component: {
-            template: "<div></div>"
+            template: "<div></div>",
           },
           meta: {
-            navWheel: { style: { stroke: "yellow" }, isHidden: true }
-          }
+            navWheel: { style: { stroke: "yellow" }, isHidden: true },
+          },
         },
         {
           name: "2-2",
           path: "/styles-2/2/2",
           component: {
-            template: "<div></div>"
-          }
-        }
-      ]
+            template: "<div></div>",
+          },
+        },
+      ],
     },
     {
       name: "3",
       path: "/styles-3-1",
       component: {
-        template: "<div></div>"
+        template: "<div></div>",
       },
-      meta: { navWheel: { isHidden: true } }
-    }
-  ]
+      meta: { navWheel: { isHidden: true } },
+    },
+  ],
 };
 
 const mockedRoute = { path: "mocked" };
@@ -72,8 +72,8 @@ describe("nav-wheel.vue", () => {
     const wrapper = shallowMount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     expect(wrapper.get("svg"));
   });
@@ -81,8 +81,8 @@ describe("nav-wheel.vue", () => {
     const wrapper = shallowMount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     wrapper.get("svg").trigger("wheel.prevent", { deltaY: 10 });
     expect(wrapper.vm.scale).not.toBe(1);
@@ -97,20 +97,20 @@ describe("nav-wheel.vue", () => {
     const wrapper = shallowMount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     wrapper.get("svg").trigger("touchstart", {
       touches: [
         { pageX: 10, pageY: 10 },
-        { pageX: 10, pageY: 10 }
-      ]
+        { pageX: 10, pageY: 10 },
+      ],
     });
     wrapper.get("svg").trigger("touchmove", {
       touches: [
         { pageX: 10, pageY: 10 },
-        { pageX: 20, pageY: 20 }
-      ]
+        { pageX: 20, pageY: 20 },
+      ],
     });
     expect(wrapper.vm.scale).not.toBe(1);
   });
@@ -119,28 +119,28 @@ describe("nav-wheel.vue", () => {
     const wrapper = shallowMount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     // Having a different position between the same touchstarts causes an instant zoom, which probably feels a bit strange.
     wrapper.get("svg").trigger("touchstart", {
       touches: [
         { pageX: 10, pageY: 10 },
-        { pageX: 10, pageY: 10 }
-      ]
+        { pageX: 10, pageY: 10 },
+      ],
     });
     wrapper.get("svg").trigger("touchmove", {
       touches: [
         { pageX: 10, pageY: 10 },
-        { pageX: 10, pageY: 10 }
-      ]
+        { pageX: 10, pageY: 10 },
+      ],
     });
     expect(wrapper.vm.scale).toBe(1);
     wrapper.get("svg").trigger("touchmove", {
       touches: [
         { pageX: 10, pageY: 10 },
-        { pageX: 30, pageY: 20 }
-      ]
+        { pageX: 30, pageY: 20 },
+      ],
     });
     // Just testing it works, rather than it being scaled by a certain amount.
     expect(wrapper.vm.scale).not.toBe(1);
@@ -150,8 +150,8 @@ describe("nav-wheel.vue", () => {
     const wrapper = shallowMount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     // Starting position should be without any panning.
     expect(wrapper.vm.panTranslation).toStrictEqual([-0, -0]);
@@ -174,8 +174,8 @@ describe("nav-wheel.vue", () => {
     const wrapper = mount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     expect(wrapper.vm.panTranslation).toStrictEqual([-0, -0]);
     wrapper.vm.panToTargetRect({ x: 10, y: -10, width: 50, height: 50 });
@@ -193,8 +193,8 @@ describe("nav-wheel.vue", () => {
     const wrapper = shallowMount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     // Starting position should be without any panning.
     expect(wrapper.vm.panTranslation).toStrictEqual([-0, -0]);
@@ -211,13 +211,13 @@ describe("nav-wheel.vue", () => {
       shallowMount(NavWheel, {
         propsData: {
           config: testConfig,
-          size: 600
+          size: 600,
         },
         slots: {
           center: [
-            '<g id="slotgroup-test"><circle cx="50" cy="50" r="50"/></g><g></g>'
-          ]
-        }
+            '<g id="slotgroup-test"><circle cx="50" cy="50" r="50"/></g><g></g>',
+          ],
+        },
       });
     } catch (error) {
       expect(String(error)).toBe(
@@ -231,8 +231,8 @@ describe("nav-wheel.vue", () => {
     const wrapper = shallowMount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     const testConfigHiddenRoute = testConfig.routes.find(
       ({ meta: { navWheel: { isHidden } } = { navWheel: {} } }) => isHidden
@@ -251,12 +251,12 @@ describe("nav-wheel.vue", () => {
     const wrapper = shallowMount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     const initialVisibleRoutes = wrapper.vm.routes;
     wrapper.setData({
-      activeHierarchyKey: [wrapper.vm.routes[0].hierarchyKey]
+      activeHierarchyKey: [wrapper.vm.routes[0].hierarchyKey],
     });
     await Vue.nextTick();
     const visibleRoute = wrapper.vm.routes.find(({ hierarchyKey }) =>
@@ -280,13 +280,13 @@ describe("nav-wheel.vue", () => {
     const wrapper = mount(NavWheel, {
       mocks: {
         $route: {
-          path: "some/path"
-        }
+          path: "some/path",
+        },
       },
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     wrapper.get(Route).vm.$emit("route-select", mockedRoute);
     expect(wrapper.emitted()["route-select"]).toBeTruthy();
@@ -296,8 +296,8 @@ describe("nav-wheel.vue", () => {
     const wrapper = mount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     expect(wrapper.vm.activeRoute).toEqual({});
     wrapper.get(Route).vm.$emit("route-select", mockedRoute);
@@ -307,8 +307,8 @@ describe("nav-wheel.vue", () => {
     const wrapper = mount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     wrapper.get(Route).vm.$emit("route-deselect", mockedRoute);
     expect(wrapper.emitted()["route-deselect"]).toBeTruthy();
@@ -318,8 +318,8 @@ describe("nav-wheel.vue", () => {
     const wrapper = mount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     wrapper.get(Route).vm.$emit("route-mouseover", mockedRoute);
     expect(wrapper.emitted()["route-mouseover"]).toBeTruthy();
@@ -329,8 +329,8 @@ describe("nav-wheel.vue", () => {
     const wrapper = mount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     wrapper.get(Route).vm.$emit("route-mouseleave", mockedRoute);
     expect(wrapper.emitted()["route-mouseleave"]).toBeTruthy();
@@ -340,8 +340,8 @@ describe("nav-wheel.vue", () => {
     const wrapper = mount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     // Only emit the disabled route.
     const disabledRouteWrapper = wrapper.findAll(Route).at(0);
@@ -353,10 +353,10 @@ describe("nav-wheel.vue", () => {
     const wrapper = shallowMount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
+        size: 600,
       },
       localVue,
-      router: new VueRouter({ routes: testConfig.routes })
+      router: new VueRouter({ routes: testConfig.routes }),
     });
 
     wrapper.vm.$router.push({ path: "/path/new" });
@@ -368,8 +368,8 @@ describe("nav-wheel.vue", () => {
     const wrapper = mount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     expect(wrapper.vm.activeHierarchyKey).toEqual([]);
     // Hierarchy keys are uuids, which are added as a computed.
@@ -383,11 +383,11 @@ describe("nav-wheel.vue", () => {
     const wrapper = mount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
+        size: 600,
       },
       methods: {
-        panToTargetRect: spyPanToTargetRect
-      }
+        panToTargetRect: spyPanToTargetRect,
+      },
     });
     wrapper.get(Route).vm.$emit("pan-route");
     expect(spyPanToTargetRect.callCount).toEqual(1);
@@ -399,21 +399,21 @@ describe("nav-wheel.vue", () => {
       ...testConfig,
       constants: {
         ...testConfig.constants,
-        isPanOnMouseMoveEnabled: true
-      }
+        isPanOnMouseMoveEnabled: true,
+      },
     };
     const featureDisabledConfig = {
       ...testConfig,
       constants: {
         ...testConfig.constants,
-        isPanOnMouseMoveEnabled: false
-      }
+        isPanOnMouseMoveEnabled: false,
+      },
     };
     const wrapper = mount(NavWheel, {
       propsData: {
         config: featureDisabledConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     const startingPanTranslation = wrapper.vm.panTranslation;
     wrapper.get("svg").trigger("mousemove", { offsetX: 10, offsetY: -10 });
@@ -428,21 +428,21 @@ describe("nav-wheel.vue", () => {
       ...testConfig,
       constants: {
         ...testConfig.constants,
-        isPanOnSelectEnabled: true
-      }
+        isPanOnSelectEnabled: true,
+      },
     };
     const featureDisabledConfig = {
       ...testConfig,
       constants: {
         ...testConfig.constants,
-        isPanOnSelectEnabled: false
-      }
+        isPanOnSelectEnabled: false,
+      },
     };
     const wrapper = mount(NavWheel, {
       propsData: {
         config: featureDisabledConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     const mockTargetRect = { x: 10, y: -10, width: 50, height: 50 };
     const startingPanTranslation = wrapper.vm.panTranslation;

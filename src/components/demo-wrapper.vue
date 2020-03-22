@@ -76,7 +76,7 @@ export default {
     DemoFunctionality,
     DemoSlot,
     DemoConditional,
-    DemoModal
-  }
+    DemoModal,
+  },
 };
 </script>

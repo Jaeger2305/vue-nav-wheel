@@ -11,17 +11,17 @@
 import NavWheel from "./nav-wheel.vue";
 export default {
   components: {
-    NavWheel
+    NavWheel,
   },
   props: {
     isShowingCode: {
       type: Boolean,
-      default: true
+      default: true,
     },
     navWheelConfig: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
