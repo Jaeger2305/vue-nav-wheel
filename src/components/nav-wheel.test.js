@@ -173,6 +173,59 @@ describe("nav-wheel.vue", () => {
     // Testing it works, rather than scaling by a certain amount to keep a robust test.
     expect(wrapper.vm.scale).not.toBe(1);
   });
+  it("scales the SVG further on multiple distinct pinches", () => {
+    const wrapper = shallowMount(NavWheel, {
+      propsData: {
+        config: testConfig,
+        size: 600
+      }
+    });
+    wrapper.get("svg").trigger("touchmove", {
+      touches: [
+        { pageX: 10, pageY: 10 },
+        { pageX: 20, pageY: 20 }
+      ]
+    });
+    wrapper.get("svg").trigger("touchmove", {
+      touches: [
+        { pageX: 10, pageY: 10 },
+        { pageX: 10, pageY: 10 }
+      ]
+    });
+    const firstPinchEndScale = wrapper.vm.scale;
+    wrapper.get("svg").trigger("touchend");
+    wrapper.get("svg").trigger("touchmove", {
+      touches: [
+        { pageX: 10, pageY: 10 },
+        { pageX: 20, pageY: 20 }
+      ]
+    });
+    wrapper.get("svg").trigger("touchmove", {
+      touches: [
+        { pageX: 10, pageY: 10 },
+        { pageX: 10, pageY: 10 }
+      ]
+    });
+    expect(wrapper.vm.scale).toBeLessThan(firstPinchEndScale);
+  });
+  it("resets the touches on touchend", () => {
+    const wrapper = shallowMount(NavWheel, {
+      propsData: {
+        config: testConfig,
+        size: 600
+      }
+    });
+    wrapper.get("svg").trigger("touchmove", {
+      touches: [
+        { pageX: 10, pageY: 10 },
+        { pageX: 10, pageY: 10 }
+      ]
+    });
+    expect(wrapper.vm.scale).toBe(1);
+    wrapper.get("svg").trigger("touchend");
+    // Testing it works, rather than scaling by a certain amount to keep a robust test.
+    expect(wrapper.vm.touches.length).toBe(0);
+  });
   it("pans according to DOM mousemove", () => {
     // The touch handling still needs some work, but add a placeholder test for now.
     const wrapper = shallowMount(NavWheel, {

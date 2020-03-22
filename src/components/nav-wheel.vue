@@ -5,6 +5,7 @@
       :width="size"
       :height="size"
       @touchmove="touchmove"
+      @touchend="touchend"
       @mousemove="panSvg"
       @mouseleave="resetPan"
       @wheel.prevent="scaleSvg"
@@ -158,6 +159,9 @@ export default {
         e.touches[0].pageY - e.touches[1].pageY
       );
       this.scaleSvg({ deltaY: previousDistance - newDistance });
+    },
+    touchend() {
+      this.touches = [];
     },
     panSvg($event) {
       if (!this.config.constants.isPanOnMouseMoveEnabled) return;
