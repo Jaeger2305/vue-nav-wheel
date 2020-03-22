@@ -93,7 +93,7 @@ export default {
       initialSize: this.size,
       activeRoute: {},
       activeHierarchyKey: [],
-      touches: []
+      touches: [],
     };
   },
   computed: {

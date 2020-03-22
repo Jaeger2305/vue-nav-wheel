@@ -97,14 +97,14 @@ describe("nav-wheel.vue", () => {
     const wrapper = shallowMount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     wrapper.get("svg").trigger("touchmove", {
       touches: [
         { pageX: 10, pageY: 10 },
-        { pageX: 10, pageY: 10 }
-      ]
+        { pageX: 10, pageY: 10 },
+      ],
     });
     expect(wrapper.vm.scale).toBe(1);
   });
@@ -139,8 +139,8 @@ describe("nav-wheel.vue", () => {
     wrapper.get("svg").trigger("touchmove", {
       touches: [
         { pageX: 10, pageY: 10 },
-        { pageX: 20, pageY: 20 }
-      ]
+        { pageX: 20, pageY: 20 },
+      ],
     });
     wrapper.get("svg").trigger("touchmove", {
       touches: [
@@ -154,8 +154,8 @@ describe("nav-wheel.vue", () => {
     const wrapper = shallowMount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     wrapper.get("svg").trigger("touchmove", {
       touches: [
@@ -177,34 +177,34 @@ describe("nav-wheel.vue", () => {
     const wrapper = shallowMount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     wrapper.get("svg").trigger("touchmove", {
       touches: [
         { pageX: 10, pageY: 10 },
-        { pageX: 20, pageY: 20 }
-      ]
+        { pageX: 20, pageY: 20 },
+      ],
     });
     wrapper.get("svg").trigger("touchmove", {
       touches: [
         { pageX: 10, pageY: 10 },
-        { pageX: 10, pageY: 10 }
-      ]
+        { pageX: 10, pageY: 10 },
+      ],
     });
     const firstPinchEndScale = wrapper.vm.scale;
     wrapper.get("svg").trigger("touchend");
     wrapper.get("svg").trigger("touchmove", {
       touches: [
         { pageX: 10, pageY: 10 },
-        { pageX: 20, pageY: 20 }
-      ]
+        { pageX: 20, pageY: 20 },
+      ],
     });
     wrapper.get("svg").trigger("touchmove", {
       touches: [
         { pageX: 10, pageY: 10 },
-        { pageX: 10, pageY: 10 }
-      ]
+        { pageX: 10, pageY: 10 },
+      ],
     });
     expect(wrapper.vm.scale).toBeLessThan(firstPinchEndScale);
   });
@@ -212,14 +212,14 @@ describe("nav-wheel.vue", () => {
     const wrapper = shallowMount(NavWheel, {
       propsData: {
         config: testConfig,
-        size: 600
-      }
+        size: 600,
+      },
     });
     wrapper.get("svg").trigger("touchmove", {
       touches: [
         { pageX: 10, pageY: 10 },
-        { pageX: 10, pageY: 10 }
-      ]
+        { pageX: 10, pageY: 10 },
+      ],
     });
     expect(wrapper.vm.scale).toBe(1);
     wrapper.get("svg").trigger("touchend");
