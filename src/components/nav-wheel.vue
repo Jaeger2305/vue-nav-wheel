@@ -12,10 +12,8 @@
     >
       <nav-wheel-defs />
       <g
-        :transform="
-          `translate(${panTranslation[0]}, ${panTranslation[1]}),
-          scale(${scale}, ${scale})`
-        "
+        :transform="`translate(${panTranslation[0]}, ${panTranslation[1]}),
+          scale(${scale}, ${scale})`"
       >
         <g :transform="`translate(${size / scale / 2}, ${size / scale / 2})`">
           <route
@@ -37,7 +35,7 @@
             :active-hierarchy-key="activeHierarchyKey"
             :parent-hierarchy-key="[route.hierarchyKey]"
             @route-select="
-              $event => {
+              ($event) => {
                 $emit('route-select', $event);
                 activeRoute = $event;
               }
@@ -50,9 +48,7 @@
             @pan-route="panToTargetRect"
           />
           <g
-            :transform="
-              `translate(${centerTranslation[0]}, ${centerTranslation[1]}), scale(${centerScale}, ${centerScale})`
-            "
+            :transform="`translate(${centerTranslation[0]}, ${centerTranslation[1]}), scale(${centerScale}, ${centerScale})`"
           >
             <slot name="center" />
           </g>
@@ -74,24 +70,24 @@ import uuidv4 from "uuid/v4";
 export default {
   components: {
     Route,
-    NavWheelDefs
+    NavWheelDefs,
   },
   props: {
     config: {
       type: Object,
-      required: true
+      required: true,
     },
     size: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       scale: this.config.constants.scale,
       panCoords: [
         this.size / this.config.constants.scale / 2,
-        this.size / this.config.constants.scale / 2
+        this.size / this.config.constants.scale / 2,
       ],
       centerSlotBox: { width: 100, height: 100 },
       initialSize: this.size,
@@ -104,7 +100,7 @@ export default {
     panTranslation() {
       return [
         -(this.panCoords[0] - this.size / 2) * this.scale,
-        -(this.panCoords[1] - this.size / 2) * this.scale
+        -(this.panCoords[1] - this.size / 2) * this.scale,
       ];
     },
     centerScale() {
@@ -121,13 +117,13 @@ export default {
           2,
         (-this.centerSlotBox.height * this.config.constants.startRadius) /
           this.centerSlotBox.height /
-          2
+          2,
       ];
     },
     keyedRoutes() {
-      return this.config.routes.map(route => ({
+      return this.config.routes.map((route) => ({
         ...route,
-        hierarchyKey: uuidv4()
+        hierarchyKey: uuidv4(),
       }));
     },
     routes() {
@@ -137,7 +133,7 @@ export default {
           (this.activeHierarchyKey.includes(hierarchyKey) ||
             !this.activeHierarchyKey.length)
       );
-    }
+    },
   },
   methods: {
     scaleSvg($event) {
@@ -176,9 +172,9 @@ export default {
 
       this.panCoords = [
         this.size / 2 + (targetRect.x + targetRect.width / 2),
-        this.size / 2 + (targetRect.y + targetRect.height / 2)
+        this.size / 2 + (targetRect.y + targetRect.height / 2),
       ];
-    }
+    },
   },
   mounted() {
     // Reposition the slot to be inline with the radial wheel.
@@ -193,7 +189,7 @@ export default {
   watch: {
     $route() {
       this.$emit("route-change");
-    }
-  }
+    },
+  },
 };
 </script>

@@ -10,7 +10,10 @@
     <button @click="activeStyleDemo = 2">2 - per route styling</button>
     <button @click="activeStyleDemo = 3">3 - custom transitions</button>
     <button @click="isShowingCSS = !isShowingCSS">Toggle CSS</button>
-    <component :is="`demo-styles-${activeStyleDemo}`" :is-showing-css="isShowingCSS" />
+    <component
+      :is="`demo-styles-${activeStyleDemo}`"
+      :is-showing-css="isShowingCSS"
+    />
   </div>
 </template>
 
@@ -24,17 +27,17 @@ export default {
   components: {
     DemoStyles1,
     DemoStyles2,
-    DemoStyles3
+    DemoStyles3,
   },
   data() {
     return {
       navWheelConfig: {
         routes,
-        ...navWheelConfig
+        ...navWheelConfig,
       },
       isShowingCSS: true,
-      activeStyleDemo: 1
+      activeStyleDemo: 1,
     };
-  }
+  },
 };
 </script>

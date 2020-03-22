@@ -10,7 +10,7 @@ import DemoWrapper from "./components/demo-wrapper.vue";
 export default {
   name: "vue-nav-wheel",
   components: {
-    DemoWrapper
-  }
+    DemoWrapper,
+  },
 };
 </script>

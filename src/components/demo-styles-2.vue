@@ -1,7 +1,14 @@
 <template>
   <div>
-    <p>The route meta property can have a custom configuration to style some basic properties, including stroke and fill of the annulars. The CSS for this demo also shows changing the fill for each level in the hierarchy</p>
-    <code-nav-wheel :isShowingCode="isShowingCss" :nav-wheel-config="navWheelConfig">
+    <p>
+      The route meta property can have a custom configuration to style some
+      basic properties, including stroke and fill of the annulars. The CSS for
+      this demo also shows changing the fill for each level in the hierarchy
+    </p>
+    <code-nav-wheel
+      :isShowingCode="isShowingCss"
+      :nav-wheel-config="navWheelConfig"
+    >
       <template slot="code">
         <pre>
         ::v-deep .nav-wheel__route-annular-0 {
@@ -22,7 +29,8 @@
           stroke: black;
           font-weight: bold;
         }
-      </pre>
+      </pre
+        >
         <pre>
         routes: [
           {
@@ -131,13 +139,13 @@ import navWheelConfig from "../nav-wheel-config";
 import CodeNavWheel from "./code-nav-wheel.vue";
 export default {
   components: {
-    CodeNavWheel
+    CodeNavWheel,
   },
   props: {
     isShowingCss: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
@@ -147,28 +155,28 @@ export default {
             name: "1",
             path: "/styles-2-1",
             component: {
-              template: "<div></div>"
+              template: "<div></div>",
             },
-            meta: { navWheel: { style: { stroke: "red" } } }
+            meta: { navWheel: { style: { stroke: "red" } } },
           },
           {
             name: "2",
             path: "/styles-2/2",
             component: {
-              template: "<div></div>"
+              template: "<div></div>",
             },
             meta: {
               navWheel: {
                 transitionName: "fade",
-                style: { stroke: "yellow", fill: "purple" }
-              }
+                style: { stroke: "yellow", fill: "purple" },
+              },
             },
             children: [
               {
                 name: "2-1",
                 path: "/styles-2/2/1",
                 component: {
-                  template: "<div></div>"
+                  template: "<div></div>",
                 },
                 meta: { navWheel: { style: { stroke: "yellow" } } },
                 children: [
@@ -176,7 +184,7 @@ export default {
                     name: "2-1-1",
                     path: "/styles-2/1/1",
                     component: {
-                      template: "<div></div>"
+                      template: "<div></div>",
                     },
                     meta: { navWheel: { style: { stroke: "yellow" } } },
                     children: [
@@ -184,42 +192,42 @@ export default {
                         name: "2-1-1-1",
                         path: "/styles-2/2/1/1/1",
                         component: {
-                          template: "<div></div>"
+                          template: "<div></div>",
                         },
-                        meta: { navWheel: { style: { stroke: "yellow" } } }
+                        meta: { navWheel: { style: { stroke: "yellow" } } },
                       },
                       {
                         name: "2-1-1-2",
                         path: "/styles-2/2/1/1/2",
                         component: {
-                          template: "<div></div>"
+                          template: "<div></div>",
                         },
-                        meta: { navWheel: { style: { stroke: "yellow" } } }
-                      }
-                    ]
-                  }
-                ]
+                        meta: { navWheel: { style: { stroke: "yellow" } } },
+                      },
+                    ],
+                  },
+                ],
               },
               {
                 name: "2-2",
                 path: "/styles-2/2/2",
                 component: {
-                  template: "<div></div>"
-                }
+                  template: "<div></div>",
+                },
               },
               {
                 name: "2-3",
                 path: "/styles-2/2/3",
                 component: {
-                  template: "<div></div>"
-                }
-              }
-            ]
-          }
+                  template: "<div></div>",
+                },
+              },
+            ],
+          },
         ],
-        ...navWheelConfig
-      }
+        ...navWheelConfig,
+      },
     };
-  }
+  },
 };
 </script>
