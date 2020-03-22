@@ -4,9 +4,8 @@
       class="nav-wheel__svg"
       :width="size"
       :height="size"
-      @touchstart="startPinch"
       @touchmove="touchmove"
-      @touchend="endPinch"
+      @touchend="touchend"
       @mousemove="panSvg"
       @mouseleave="resetPan"
       @wheel.prevent="scaleSvg"
@@ -94,7 +93,7 @@ export default {
       initialSize: this.size,
       activeRoute: {},
       activeHierarchyKey: [],
-      isTouchingDown: false,
+      touches: [],
     };
   },
   computed: {
@@ -140,19 +139,25 @@ export default {
     scaleSvg($event) {
       this.scale -= $event.deltaY / 1000;
     },
-    startPinch(e) {
-      this.isTouchingDown = e.touches.length > 1;
-    },
     touchmove(e) {
-      if (!this.isTouchingDown) return;
-      const dist = Math.hypot(
+      if (e.touches.length < 2) return;
+      const previousTouches =
+        this.touches.length < 2 ? e.touches : this.touches;
+      this.touches = e.touches;
+
+      const previousDistance = Math.hypot(
+        previousTouches[0].pageX - previousTouches[1].pageX,
+        previousTouches[0].pageY - previousTouches[1].pageY
+      );
+
+      const newDistance = Math.hypot(
         e.touches[0].pageX - e.touches[1].pageX,
         e.touches[0].pageY - e.touches[1].pageY
       );
-      this.scaleSvg({ deltaY: dist });
+      this.scaleSvg({ deltaY: previousDistance - newDistance });
     },
-    endPinch() {
-      this.isTouchingDown = false;
+    touchend() {
+      this.touches = [];
     },
     panSvg($event) {
       if (!this.config.constants.isPanOnMouseMoveEnabled) return;
@@ -184,9 +189,6 @@ export default {
   watch: {
     $route() {
       this.$emit("route-change");
-    },
-    isTouchingDown() {
-      this.$emit("test");
     },
   },
 };
