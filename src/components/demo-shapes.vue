@@ -32,21 +32,21 @@ import CodeNavWheel from "./code-nav-wheel.vue";
 export default {
   components: {
     Config,
-    CodeNavWheel
+    CodeNavWheel,
   },
   data() {
     return {
       navWheelConfig: {
         routes,
-        ...navWheelConfig
-      }
+        ...navWheelConfig,
+      },
     };
   },
   methods: {
     omitRouteConfig() {
       const { routes, ...rest } = navWheelConfig;
       return rest;
-    }
-  }
+    },
+  },
 };
 </script>

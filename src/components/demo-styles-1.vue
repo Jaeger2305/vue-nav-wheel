@@ -1,7 +1,13 @@
 <template>
   <div>
-    <p>Overriding of specific BEM classes, see the nav-wheel.css for the full list of classes.</p>
-    <code-nav-wheel :isShowingCode="isShowingCss" :nav-wheel-config="navWheelConfig">
+    <p>
+      Overriding of specific BEM classes, see the nav-wheel.css for the full
+      list of classes.
+    </p>
+    <code-nav-wheel
+      :isShowingCode="isShowingCss"
+      :nav-wheel-config="navWheelConfig"
+    >
       <template slot="code">
         <pre>
         ::v-deep .nav-wheel__svg {
@@ -32,7 +38,8 @@
         ::v-deep .nav-wheel__route-ripple {
           fill: purple;
         }
-      </pre>
+      </pre
+        >
       </template>
     </code-nav-wheel>
   </div>
@@ -75,21 +82,21 @@ import routes from "../routes";
 import CodeNavWheel from "./code-nav-wheel.vue";
 export default {
   components: {
-    CodeNavWheel
+    CodeNavWheel,
   },
   props: {
     isShowingCss: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
       navWheelConfig: {
         routes,
-        ...navWheelConfig
-      }
+        ...navWheelConfig,
+      },
     };
-  }
+  },
 };
 </script>

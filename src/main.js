@@ -7,7 +7,7 @@ import {
   faChild,
   faCircle,
   faArchive,
-  faAddressCard
+  faAddressCard,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import routes from "./routes";
@@ -16,12 +16,12 @@ library.add(faCoffee, faChild, faCircle, faArchive, faAddressCard);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 const router = new VueRouter({
-  routes
+  routes,
 });
 
 Vue.use(VueRouter);
 
 new Vue({
   router,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount("#vue-nav-wheel");

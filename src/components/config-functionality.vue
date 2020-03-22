@@ -40,20 +40,20 @@ export default {
   props: {
     isPanOnSelectEnabled: {
       type: Boolean,
-      required: true
+      required: true,
     },
     isPanOnMouseMoveEnabled: {
       type: Boolean,
-      required: true
+      required: true,
     },
     hierarchyLevelsDisplayLimit: {
       type: Number,
-      required: true
+      required: true,
     },
     hierarchyLevelFocus: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     inputIsPanOnSelectEnabled: {
@@ -62,7 +62,7 @@ export default {
       },
       set(isPanOnSelectEnabled) {
         this.$emit("update:isPanOnSelectEnabled", isPanOnSelectEnabled);
-      }
+      },
     },
     inputIsPanOnMouseMoveEnabled: {
       get() {
@@ -70,7 +70,7 @@ export default {
       },
       set(isPanOnMouseMoveEnabled) {
         this.$emit("update:isPanOnMouseMoveEnabled", isPanOnMouseMoveEnabled);
-      }
+      },
     },
     inputHierarchyLevelsDisplayLimit: {
       get() {
@@ -81,7 +81,7 @@ export default {
           "update:hierarchyLevelsDisplayLimit",
           hierarchyLevelsDisplayLimit
         );
-      }
+      },
     },
     inputHierarchyLevelFocus: {
       get() {
@@ -89,8 +89,8 @@ export default {
       },
       set(hierarchyLevelFocus) {
         this.$emit("update:hierarchyLevelFocus", hierarchyLevelFocus);
-      }
-    }
+      },
+    },
   },
   methods: {
     randomize() {
@@ -98,7 +98,7 @@ export default {
       this.inputIsPanOnMouseMoveEnabled = Math.random() > 0.5;
       this.inputHierarchyLevelsDisplayLimit = randomInRange(1, 5);
       this.inputHierarchyLevelFocus = randomInRange(1, 5);
-    }
-  }
+    },
+  },
 };
 </script>

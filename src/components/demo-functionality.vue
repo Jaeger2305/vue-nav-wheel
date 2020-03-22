@@ -2,8 +2,9 @@
   <div>
     <h2>Demo functionality</h2>
     <p>
-      Some config values change the functionality of the nav wheel, changing how to view and navigate the wheel.
-      These values are largely useful to give a more focused display if there isn't much screen space.
+      Some config values change the functionality of the nav wheel, changing how
+      to view and navigate the wheel. These values are largely useful to give a
+      more focused display if there isn't much screen space.
     </p>
     <config-functionality
       v-bind="navWheelConfig.constants"
@@ -11,7 +12,9 @@
       :isPanOnMouseMoveEnabled.sync="
         navWheelConfig.constants.isPanOnMouseMoveEnabled
       "
-      :hierarchyLevelsDisplayLimit.sync="navWheelConfig.constants.hierarchyLevelsDisplayLimit"
+      :hierarchyLevelsDisplayLimit.sync="
+        navWheelConfig.constants.hierarchyLevelsDisplayLimit
+      "
       :hierarchyLevelFocus.sync="navWheelConfig.constants.hierarchyLevelFocus"
     />
     <code-nav-wheel :nav-wheel-config="navWheelConfig">
@@ -30,21 +33,21 @@ import CodeNavWheel from "./code-nav-wheel.vue";
 export default {
   components: {
     ConfigFunctionality,
-    CodeNavWheel
+    CodeNavWheel,
   },
   data() {
     return {
       navWheelConfig: {
         routes,
-        ...navWheelConfig
-      }
+        ...navWheelConfig,
+      },
     };
   },
   methods: {
     omitRouteConfig() {
       const { routes, ...rest } = navWheelConfig;
       return rest;
-    }
-  }
+    },
+  },
 };
 </script>

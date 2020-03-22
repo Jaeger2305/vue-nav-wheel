@@ -88,32 +88,32 @@ export default {
   props: {
     padAngle: {
       type: Number,
-      required: true
+      required: true,
     },
     spaceBetweenParentChild: {
       type: Number,
-      required: true
+      required: true,
     },
     shrinkRouteScale: {
       type: Number,
-      required: true
+      required: true,
     },
     scale: {
       type: Number,
-      required: true
+      required: true,
     },
     cornerSharpness: {
       type: Number,
-      required: true
+      required: true,
     },
     startRadius: {
       type: Number,
-      required: true
+      required: true,
     },
     childAngleSpread: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     inputPadAngle: {
@@ -122,7 +122,7 @@ export default {
       },
       set(padAngle) {
         this.$emit("update:padAngle", padAngle);
-      }
+      },
     },
     inputSpaceBetweenParentChild: {
       get() {
@@ -130,7 +130,7 @@ export default {
       },
       set(spaceBetweenParentChild) {
         this.$emit("update:spaceBetweenParentChild", spaceBetweenParentChild);
-      }
+      },
     },
     inputShrinkRouteScale: {
       get() {
@@ -138,7 +138,7 @@ export default {
       },
       set(shrinkRouteScale) {
         this.$emit("update:shrinkRouteScale", shrinkRouteScale);
-      }
+      },
     },
     inputScale: {
       get() {
@@ -146,7 +146,7 @@ export default {
       },
       set(scale) {
         this.$emit("update:scale", scale);
-      }
+      },
     },
     inputCornerSharpness: {
       get() {
@@ -154,7 +154,7 @@ export default {
       },
       set(cornerSharpness) {
         this.$emit("update:cornerSharpness", cornerSharpness);
-      }
+      },
     },
     inputStartRadius: {
       get() {
@@ -162,7 +162,7 @@ export default {
       },
       set(startRadius) {
         this.$emit("update:startRadius", startRadius);
-      }
+      },
     },
     inputChildAngleSpread: {
       get() {
@@ -170,8 +170,8 @@ export default {
       },
       set(childAngleSpread) {
         this.$emit("update:childAngleSpread", childAngleSpread);
-      }
-    }
+      },
+    },
   },
   methods: {
     randomize() {
@@ -182,7 +182,7 @@ export default {
       this.inputCornerSharpness = randomInRange(0, 300);
       this.inputStartRadius = randomInRange(0, 300);
       this.inputChildAngleSpread = randomInRange(0, 0.5);
-    }
-  }
+    },
+  },
 };
 </script>
