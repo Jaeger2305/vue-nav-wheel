@@ -12,6 +12,9 @@
     "type": "git",
     "url": "https://github.com/Jaeger2305/vue-nav-wheel"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name nav-wheel ./src/entry.js",

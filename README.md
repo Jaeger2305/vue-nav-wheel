@@ -14,7 +14,6 @@ In the app entrypoint file (main.js)
 
 ```
 import NavWheel from "vue-nav-wheel";
-import("vue-nav-wheel/dist/nav-wheel.css");
 Vue.component("nav-wheel", NavWheel);
 ```
 
